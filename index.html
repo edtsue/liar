@@ -97,6 +97,7 @@
     transition: all 0.15s;
   }
   .nav-btn:hover { background: var(--surface-2); border-color: var(--text-muted); }
+  .nav-btn-icon { padding: 8px 12px; font-size: 14px; line-height: 1; }
   .nav-btn-primary {
     background: var(--lime-fill);
     color: var(--lime-on-fill);
@@ -262,6 +263,207 @@
     color: var(--text);
     font-weight: 600;
   }
+  .test-chat-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .test-chat-btn:hover { background: var(--surface-2); border-color: var(--text-muted); }
+
+  /* Chat overlay */
+  .chat-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .chat-overlay.open { display: flex; }
+  .chat-overlay-bg {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+  .chat-panel {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    height: min(80vh, 720px);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 24px 24px 0 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.4);
+    margin-bottom: 0;
+  }
+  @media (min-width: 700px) {
+    .chat-overlay { align-items: center; }
+    .chat-panel { border-radius: 24px; height: min(80vh, 720px); }
+  }
+  .chat-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .chat-head .label { color: var(--lime); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+  .chat-head h3 { font-size: 16px; font-weight: 500; margin-top: 2px; letter-spacing: -0.01em; }
+  .chat-close {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+  }
+  .chat-close:hover { background: var(--surface-2); }
+  .chat-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .chat-msg {
+    max-width: 88%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .chat-msg.user {
+    align-self: flex-end;
+    background: var(--lime-fill);
+    color: var(--lime-on-fill);
+    border-bottom-right-radius: 4px;
+  }
+  .chat-msg.bot {
+    align-self: flex-start;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-bottom-left-radius: 4px;
+  }
+  .chat-msg .sources {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .chat-msg .sources a {
+    display: block;
+    color: var(--text);
+    text-decoration: none;
+    padding: 4px 0;
+  }
+  .chat-msg .sources a:hover { color: var(--lime); text-decoration: underline; }
+  .chat-typing {
+    align-self: flex-start;
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 8px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+  }
+  .chat-typing .dot {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    margin: 0 1px;
+    animation: blink 1.2s infinite;
+  }
+  .chat-typing .dot:nth-child(2) { animation-delay: 0.2s; }
+  .chat-typing .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink {
+    0%, 60%, 100% { opacity: 0.3; }
+    30% { opacity: 1; }
+  }
+  .chat-prompts {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    flex-shrink: 0;
+    background: var(--surface);
+  }
+  .chat-prompts-label {
+    width: 100%;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+  .chat-chip {
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 7px 12px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .chat-chip:hover { border-color: var(--lime-fill); color: var(--lime); }
+  .chat-input-row {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .chat-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 10px 14px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-size: 14px;
+  }
+  .chat-input:focus { outline: none; border-color: var(--lime-fill); }
+  .chat-send {
+    background: var(--lime-fill);
+    color: var(--lime-on-fill);
+    border: 1px solid var(--lime-fill);
+    padding: 10px 18px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .chat-send:hover { filter: brightness(0.95); }
   .test-title {
     font-size: clamp(22px, 3vw, 30px);
     font-weight: 500;
@@ -410,6 +612,7 @@
     <a class="by" href="https://edtsue.com" target="_blank" rel="noopener">Made by Ed Tsue<span class="arrow">↗</span></a>
   </div>
   <div class="nav-actions">
+    <button class="nav-btn nav-btn-icon" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
     <button class="nav-btn" id="shareBtn" onclick="shareTool()">Share</button>
     <button class="nav-btn" onclick="resetAll()">Reset</button>
     <button class="nav-btn nav-btn-primary" onclick="window.print()">Print</button>
@@ -439,6 +642,27 @@
 </div>
 
 <div id="tests"></div>
+
+<div class="chat-overlay" id="chatOverlay" role="dialog" aria-modal="true" aria-label="Chat about this test">
+  <div class="chat-overlay-bg" onclick="closeChat()"></div>
+  <div class="chat-panel">
+    <div class="chat-head">
+      <div>
+        <div class="label">💬 Chat about this</div>
+        <h3 id="chatTitle">—</h3>
+      </div>
+      <button class="chat-close" onclick="closeChat()" aria-label="Close chat">✕</button>
+    </div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-prompts" id="chatPrompts">
+      <div class="chat-prompts-label">Try a question</div>
+    </div>
+    <form class="chat-input-row" onsubmit="sendChatInput(event)">
+      <input class="chat-input" id="chatInput" placeholder="Ask anything about this test…" autocomplete="off" />
+      <button class="chat-send" type="submit">Send</button>
+    </form>
+  </div>
+</div>
 
 <div class="notes">
   <div class="notes-grid">
@@ -611,6 +835,210 @@ function updateVerdict() {
   tagEl.textContent = v.tag;
   barEl.style.width = overall.pct + '%';
   if (v.cls) card.classList.add(v.cls);
+}
+
+// ─── Chat about this — per-test canned conversations ──────────────────
+// Curated responses with handpicked sources. No live API calls.
+const CHAT_DATA = [
+  {
+    prompts: [
+      {
+        q: "How do I politely interrupt a prerecorded demo?",
+        a: "You don't need to be polite about it — you need to be specific. Try: \"This looks great. Before we go further, can we pause the video and have someone open the actual tool? I want to see it run live with one of our briefs.\"\n\nTwo things this does:\n- Forces the agency to either show the tool or admit it isn't ready\n- Signals you're a sophisticated buyer who knows the difference\n\nIf they push back (\"the demo environment is offline,\" \"we'll show you in scoping\"), that IS the answer. Real tools survive someone clicking around in them.",
+        sources: [
+          { label: "Recorded vs. live demos in B2B sales — Lenny's Newsletter", url: "https://www.lennysnewsletter.com/" },
+          { label: "How to evaluate AI startup demos — Andreessen Horowitz", url: "https://a16z.com/" },
+        ]
+      },
+      {
+        q: "What's a real demo vs a theatre demo?",
+        a: "Real demos have friction. Things load slowly. The presenter mistypes. Edge cases produce weird output. You see the actual UI, including the parts they didn't polish.\n\nTheatre demos are smooth. Cuts between scenes. A confident voiceover. Stock footage of diverse young people looking at screens. The 'tool' is a mockup or a single-use video render.\n\nThe tell: ask to see something they didn't prep for. A real tool handles a surprise prompt. A theatre demo stalls — \"we'll cover that in the next phase.\"",
+        sources: [
+          { label: "Marc Andreessen on the difference between real and demo software", url: "https://a16z.com/" },
+          { label: "Building in public — why janky beats polished", url: "https://www.indiehackers.com/" },
+        ]
+      },
+      {
+        q: "Examples of agencies caught overselling AI",
+        a: "A few patterns that have surfaced publicly:\n- Holding-company \"AI platforms\" that turn out to be wrappers around the same OpenAI API anyone can call\n- Case-study videos for tools that were never deployed at the client\n- \"Proprietary models\" that are off-the-shelf models with custom prompts\n\nThe industry-wide tell: a launch announcement that doesn't include a single screenshot of a real interface, just renders and case-study quotes. If you can't see the product, the product probably isn't the point — the press release is.",
+        sources: [
+          { label: "Adweek — Inside agency AI claims", url: "https://www.adweek.com/" },
+          { label: "Digiday — When 'proprietary AI' is just a wrapper", url: "https://digiday.com/" },
+        ]
+      },
+      {
+        q: "What should the practitioner — not the senior — be able to show me?",
+        a: "Hand the keyboard to the most junior person in the room and ask them to:\n- Open the actual tool\n- Run it on a brief or dataset you provide\n- Show you the raw output before any polishing\n- Click into one piece of the output and explain what the model did\n\nIf the senior keeps reaching for the keyboard or talking over them, that's your answer. The junior is the person who actually uses the tool day-to-day. If they can't operate it on demand, nobody can.",
+        sources: [
+          { label: "How to vet enterprise AI vendors — First Round Review", url: "https://review.firstround.com/" },
+        ]
+      },
+    ]
+  },
+  {
+    prompts: [
+      {
+        q: "What's the cleanest question to expose a vague pitch?",
+        a: "\"What's the failure mode you're most worried about, and what have you put in place to catch it?\"\n\nA real team has rehearsed this. They'll name a specific failure (\"the model hallucinates citations on technical briefs\"), describe their guardrail (\"we run a citation-check pass against a verified database\"), and tell you when it still slips through.\n\nA theatre team gives you platitudes (\"we have robust QA\") or pivots to a case study. Watch the energy: people who've actually wrestled with the problem get specific and a little animated. People who haven't sound polished and tired.",
+        sources: [
+          { label: "Stanford HAI — Evaluating AI systems in deployment", url: "https://hai.stanford.edu/" },
+          { label: "Anthropic — On model evaluations and red-teaming", url: "https://www.anthropic.com/research" },
+        ]
+      },
+      {
+        q: "What does 'hallucination' really mean and how do I probe it?",
+        a: "Hallucination = the model confidently producing content that isn't true. Made-up citations, invented statistics, fabricated quotes from real people. It happens because language models predict plausible text, not factual text.\n\nProbe it three ways:\n- \"Show me the most recent hallucination this tool produced and how you caught it.\"\n- \"What's the failure rate on a task like ours?\"\n- \"What human review sits between the model output and the client?\"\n\nIf they say \"our model doesn't hallucinate,\" you can leave. Every LLM-based system hallucinates. The question is whether they know where, how often, and what to do about it.",
+        sources: [
+          { label: "OpenAI — Lessons from production hallucinations", url: "https://openai.com/" },
+          { label: "Stanford CRFM — RAG limitations and hallucinations", url: "https://crfm.stanford.edu/" },
+        ]
+      },
+      {
+        q: "What's the difference between scars and excuses?",
+        a: "Scars are specific. They have a date, a project, a person, a fix. \"On the Q3 brief for [client], the model ranked influencers using outdated engagement data. We caught it on review, switched the input source, and now we run a freshness check before each run.\"\n\nExcuses are abstract. \"AI is constantly improving.\" \"Edge cases happen.\" \"Our process catches that.\" These are PR sentences, not lessons.\n\nA team with scars will sometimes disagree with each other in front of you. \"No, the issue wasn't the data — it was the prompt.\" That's gold. It means they actually argued about it.",
+        sources: [
+          { label: "First Round Review — How to spot real builders in interviews", url: "https://review.firstround.com/" },
+        ]
+      },
+      {
+        q: "What should the agency volunteer about its weaknesses?",
+        a: "Strong signal — they bring it up before you ask:\n- \"Where this is weakest is high-stakes legal or medical claims.\"\n- \"It's terrible on anything pre-2023.\"\n- \"Don't use it on highly regulated categories without a human-in-the-loop.\"\n\nWeak signal — you have to extract it, and it's vague:\n- \"It's not perfect.\"\n- \"There are some edge cases.\"\n- \"Continuously improving.\"\n\nThe specific volunteered weakness is the strongest tell that someone has used the thing in production. Marketers don't know to volunteer it; only operators do.",
+        sources: [
+          { label: "Andreessen Horowitz — Honest pitches outperform optimistic ones", url: "https://a16z.com/" },
+        ]
+      },
+    ]
+  },
+  {
+    prompts: [
+      {
+        q: "What's a real philosophy vs a tech-stack list?",
+        a: "A philosophy is a sentence about how the world works — not a list of tools.\n\nReal: \"We believe AI should make the practitioner faster, not replace them, because the strategist's judgment is the asset.\" That sentence excludes things. It explains why they hire who they hire and why they reject certain projects.\n\nFake: \"We use OpenAI, Anthropic, Gemini, our proprietary platform, and best-of-breed integrations to deliver end-to-end AI-powered solutions.\" That's a Best Buy receipt.\n\nThe test: ask them what they DON'T do. A philosophy rules things out. A tech stack just adds more.",
+        sources: [
+          { label: "Paul Graham — Mean people fail (philosophy as a filter)", url: "http://paulgraham.com/mean.html" },
+          { label: "Stratechery — The strategy of saying no", url: "https://stratechery.com/" },
+        ]
+      },
+      {
+        q: "How do I pressure-test their belief in real time?",
+        a: "Concede something to them, then push the opposite direction. \"That's interesting — but doesn't that mean you'd be slower than [competitor] on volume work?\"\n\nWatch what happens:\n- Real belief: they accept the tradeoff and explain why it's worth it. \"Yes, we'd be slower. We think volume work is being commoditized anyway.\"\n- No belief: they retreat. \"We can do volume work too.\" Now their belief is whatever you wanted to hear.\n\nA real worldview survives counter-pressure. A pitch posture bends to whatever the buyer signals.",
+        sources: [
+          { label: "Adam Grant — Think Again (revising vs. defending beliefs)", url: "https://adamgrant.net/" },
+        ]
+      },
+      {
+        q: "What does conceding a competitor look like?",
+        a: "Strong: \"Honestly, [competitor] is better than us on hyper-personalized email — they've been at it longer and their data integrations are deeper. We're better on creative concepting because that's where we put our investment.\"\n\nThat sentence does three things at once: gives the competitor a real win, explains the tradeoff, and tells you what the agency actually believes.\n\nWeak: \"They're a great company, but we think we're more strategic.\" That's a non-answer. It concedes nothing and differentiates on a meaningless axis. Anyone can claim to be \"more strategic.\"",
+        sources: [
+          { label: "Roger Martin — Playing to Win (real strategy concedes)", url: "https://rogermartin.medium.com/" },
+        ]
+      },
+      {
+        q: "What kinds of clients should they say they won't take?",
+        a: "A real philosophy implies a client they'd turn down. Listen for it:\n- \"We won't work with brands that need 24-hour creative turnaround. That's not what we're set up for.\"\n- \"We don't do paid social management. We refer that to [partner].\"\n- \"We won't take a client who treats AI as a cost-cut. The work suffers.\"\n\nThese sentences are expensive to say in a pitch — they shrink the agency's market. Which is exactly why hearing them is the strongest signal that the philosophy is real. People only turn down money for things they actually believe.",
+        sources: [
+          { label: "37signals — Saying no is a strategy", url: "https://37signals.com/" },
+          { label: "Basecamp — REWORK: rejection as positioning", url: "https://basecamp.com/books/rework" },
+        ]
+      },
+    ]
+  },
+];
+
+// ─── Chat state and rendering ──────────────────────────────────────────
+let chatActiveTest = null;
+const chatHistory = {}; // testIdx -> [{role, text, sources}]
+
+function openChat(testIdx) {
+  chatActiveTest = testIdx;
+  const overlay = document.getElementById('chatOverlay');
+  document.getElementById('chatTitle').textContent = TESTS[testIdx].title;
+  renderChat();
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('chatInput')?.focus(), 100);
+}
+
+function closeChat() {
+  document.getElementById('chatOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  chatActiveTest = null;
+}
+
+function renderChat() {
+  const idx = chatActiveTest;
+  if (idx == null) return;
+  const body = document.getElementById('chatBody');
+  const promptsRow = document.getElementById('chatPrompts');
+  const history = chatHistory[idx] ?? [];
+
+  if (history.length === 0) {
+    body.innerHTML = '<div class="chat-msg bot">' +
+      escapeHtml('Hey — ask me anything about this test, or pick one of the suggestions below. I\'ll pull from public examples and frameworks.') +
+      '</div>';
+  } else {
+    body.innerHTML = history.map(m => {
+      if (m.role === 'typing') return '<div class="chat-typing"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>';
+      const sources = m.sources && m.sources.length
+        ? '<div class="sources"><div style="margin-bottom:4px; text-transform:uppercase; letter-spacing:0.06em; font-size:10px;">Sources</div>' +
+          m.sources.map(s => '<a href="' + escapeHtml(s.url) + '" target="_blank" rel="noopener">↗ ' + escapeHtml(s.label) + '</a>').join('') +
+          '</div>'
+        : '';
+      return '<div class="chat-msg ' + (m.role === 'user' ? 'user' : 'bot') + '">' + escapeHtml(m.text) + sources + '</div>';
+    }).join('');
+  }
+
+  // Show only prompts the user hasn't clicked yet
+  const usedQuestions = new Set(history.filter(m => m.role === 'user').map(m => m.text));
+  const available = CHAT_DATA[idx].prompts.filter(p => !usedQuestions.has(p.q));
+
+  if (available.length > 0) {
+    promptsRow.style.display = 'flex';
+    promptsRow.innerHTML = '<div class="chat-prompts-label">Try a question</div>' +
+      available.map((p, i) => {
+        const realIdx = CHAT_DATA[idx].prompts.indexOf(p);
+        return '<button class="chat-chip" onclick="askPreset(' + idx + ',' + realIdx + ')">' + escapeHtml(p.q) + '</button>';
+      }).join('');
+  } else {
+    promptsRow.style.display = 'none';
+  }
+
+  body.scrollTop = body.scrollHeight;
+}
+
+function askPreset(testIdx, promptIdx) {
+  const prompt = CHAT_DATA[testIdx].prompts[promptIdx];
+  if (!chatHistory[testIdx]) chatHistory[testIdx] = [];
+  chatHistory[testIdx].push({ role: 'user', text: prompt.q });
+  chatHistory[testIdx].push({ role: 'typing' });
+  renderChat();
+  setTimeout(() => {
+    // Remove typing, append actual response
+    chatHistory[testIdx] = chatHistory[testIdx].filter(m => m.role !== 'typing');
+    chatHistory[testIdx].push({ role: 'bot', text: prompt.a, sources: prompt.sources ?? [] });
+    renderChat();
+  }, 850);
+}
+
+function sendChatInput(e) {
+  e.preventDefault();
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text || chatActiveTest == null) return;
+  input.value = '';
+  const idx = chatActiveTest;
+  if (!chatHistory[idx]) chatHistory[idx] = [];
+  chatHistory[idx].push({ role: 'user', text });
+  chatHistory[idx].push({ role: 'typing' });
+  renderChat();
+  setTimeout(() => {
+    chatHistory[idx] = chatHistory[idx].filter(m => m.role !== 'typing');
+    chatHistory[idx].push({
+      role: 'bot',
+      text: 'I\'m a static demo without a live model — I don\'t have an answer to that exact question. Try one of the suggested prompts above; those have hand-picked answers and sources.',
+    });
+    renderChat();
+  }, 700);
 }
 
 const THEME_KEY = 'liar.theme';
