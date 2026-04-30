@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pitch Lie Detector</title>
+<style>
+  :root {
+    --bg: #000000;
+    --surface: #0a0a0a;
+    --surface-2: #141414;
+    --border: #1f1f1f;
+    --border-strong: #2a2a2a;
+    --text: #ffffff;
+    --text-muted: #8a8a8a;
+    --text-dim: #4a4a4a;
+    --lime: #ccff00;
+    --red: #ff4444;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--bg); }
+  body {
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
+
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 64px;
+  }
+  .logo {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .logo-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--lime);
+    border-radius: 50%;
+  }
+  .nav-actions { display: flex; gap: 8px; }
+  .nav-btn {
+    background: transparent;
+    border: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 8px 16px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .nav-btn:hover { background: var(--surface-2); border-color: #444; }
+  .nav-btn-primary {
+    background: var(--lime);
+    color: #000;
+    border-color: var(--lime);
+  }
+  .nav-btn-primary:hover { background: #b8e600; border-color: #b8e600; }
+
+  .hero { margin-bottom: 80px; }
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin-bottom: 24px;
+  }
+  h1 {
+    font-size: clamp(40px, 7vw, 80px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+    margin-bottom: 24px;
+    max-width: 900px;
+  }
+  h1 em {
+    font-style: italic;
+    color: var(--lime);
+    font-weight: 400;
+  }
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 600px;
+    line-height: 1.5;
+    margin-bottom: 40px;
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    padding: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 80px;
+  }
+  .meta-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+  .meta-field input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-strong);
+    color: var(--text);
+    padding: 6px 0;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .meta-field input:focus {
+    outline: none;
+    border-bottom-color: var(--lime);
+  }
+
+  .test {
+    margin-bottom: 96px;
+  }
+  .test-header { margin-bottom: 32px; }
+  .test-num {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--lime);
+    margin-bottom: 16px;
+  }
+  .test-title {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+  .test-desc {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 640px;
+    line-height: 1.5;
+  }
+  .test-ammo {
+    margin-top: 16px;
+    padding: 16px 20px;
+    background: var(--surface);
+    border-left: 3px solid var(--lime);
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+  .test-ammo strong {
+    color: var(--text);
+    font-weight: 500;
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .boards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .board {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+  }
+  .board-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .board-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .board-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .board.green .board-dot { background: var(--lime); }
+  .board.red .board-dot { background: var(--red); }
+  .board-name {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .board-status {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .board.bingo.green .board-status { color: var(--lime); }
+  .board.bingo.red .board-status { color: var(--red); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+  .cell {
+    aspect-ratio: 1;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 1.25;
+    color: var(--text-muted);
+    transition: all 0.15s;
+    user-select: none;
+    overflow: hidden;
+    word-break: break-word;
+  }
+  .cell:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+  .cell.free {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .board.green .cell.active {
+    background: var(--lime);
+    color: #000;
+    border-color: var(--lime);
+  }
+  .board.red .cell.active {
+    background: var(--red);
+    color: #fff;
+    border-color: var(--red);
+  }
+  .cell.in-bingo {
+    box-shadow: 0 0 0 2px var(--text);
+  }
+
+  .verdict-section {
+    margin-top: 96px;
+    padding: 48px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+  }
+  .verdict-eyebrow {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+  }
+  .verdict-headline {
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+  .verdict-headline.lime { color: var(--lime); }
+  .verdict-headline.red { color: var(--red); }
+  .verdict-detail {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 600px;
+    line-height: 1.5;
+    margin-bottom: 32px;
+  }
+  .tally {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .tally-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .tally-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .tally-value {
+    font-size: 40px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .tally-value.lime { color: var(--lime); }
+  .tally-value.red { color: var(--red); }
+  .tally-value-sub {
+    font-size: 16px;
+    color: var(--text-dim);
+    margin-left: 4px;
+  }
+
+  .notes { margin-top: 64px; }
+  .notes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .note-field {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .note-field label {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .note-field textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 15px;
+    resize: vertical;
+    min-height: 60px;
+    line-height: 1.5;
+  }
+  .note-field textarea:focus { outline: none; }
+
+  footer {
+    margin-top: 80px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 12px;
+    color: var(--text-dim);
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 800px) {
+    .container { padding: 16px 12px 60px; }
+    nav { padding-bottom: 24px; margin-bottom: 32px; }
+    .boards { grid-template-columns: 1fr; gap: 16px; }
+    .notes-grid { grid-template-columns: 1fr; }
+    .verdict-section { padding: 24px; }
+    .cell { font-size: 9px; padding: 4px; }
+    .test { margin-bottom: 64px; }
+    h1 { font-size: 36px; }
+  }
+
+  @media print {
+    @page { margin: 0.5in; size: letter; }
+    html, body {
+      background: white !important;
+      color: black !important;
+    }
+    body { font-size: 11pt; }
+    .container { max-width: 100%; padding: 0; }
+    nav, .nav-actions, footer { display: none !important; }
+    .hero { margin-bottom: 24pt; page-break-after: avoid; }
+    .eyebrow { color: #555 !important; }
+    h1 { font-size: 28pt !important; color: black !important; }
+    h1 em { color: black !important; font-style: italic; }
+    .hero-sub { color: #444 !important; font-size: 11pt; }
+    .meta {
+      background: white !important;
+      border: 1px solid #999 !important;
+      page-break-inside: avoid;
+    }
+    .meta-field input {
+      color: black !important;
+      border-bottom: 1px solid #999 !important;
+    }
+    .test {
+      margin-bottom: 0;
+      padding: 16pt 0;
+      page-break-before: always;
+      page-break-after: auto;
+    }
+    .test:first-of-type { page-break-before: auto; }
+    .test-num { color: #555 !important; }
+    .test-title { color: black !important; font-size: 22pt !important; }
+    .test-desc { color: #444 !important; }
+    .test-ammo {
+      background: #f5f5f5 !important;
+      border-left: 3px solid #000 !important;
+      color: #333 !important;
+    }
+    .test-ammo strong { color: black !important; }
+    .boards { grid-template-columns: 1fr 1fr; gap: 12pt; page-break-inside: avoid; }
+    .board {
+      background: white !important;
+      border: 1px solid #999 !important;
+      padding: 12pt;
+    }
+    .board-name, .board-status { color: black !important; }
+    .board.green .board-dot {
+      background: white !important;
+      border: 2px solid black !important;
+    }
+    .board.red .board-dot { background: black !important; }
+    .grid { gap: 3pt; }
+    .cell {
+      background: white !important;
+      border: 1px solid #999 !important;
+      color: black !important;
+      font-size: 7pt !important;
+      padding: 3pt;
+    }
+    .cell.free {
+      background: #eee !important;
+      font-weight: 700;
+    }
+    .verdict-section, .notes {
+      page-break-before: always;
+      background: white !important;
+      border: 1px solid #999 !important;
+    }
+    .verdict-headline { color: black !important; font-size: 24pt !important; }
+    .verdict-detail { color: #333 !important; }
+    .tally-card {
+      background: white !important;
+      border: 1px solid #999 !important;
+    }
+    .tally-label, .tally-value { color: black !important; }
+    .note-field {
+      background: white !important;
+      border: 1px solid #999 !important;
+      page-break-inside: avoid;
+    }
+    .note-field label { color: #333 !important; }
+    .note-field textarea {
+      color: black !important;
+      min-height: 80pt;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav>
+  <div class="logo">
+    <span class="logo-dot"></span>
+    <span>Pitch Lie Detector</span>
+  </div>
+  <div class="nav-actions">
+    <button class="nav-btn" onclick="resetAll()">Reset</button>
+    <button class="nav-btn nav-btn-primary" onclick="window.print()">Print</button>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="eyebrow">For clients, against fugazi</div>
+  <h1>Is your agency <em>lying</em> about AI?</h1>
+  <p class="hero-sub">Three boards. Five-in-a-row wins. Mark squares as they happen during the pitch — the pattern tells you whether to sign or walk.</p>
+</div>
+
+<div class="meta">
+  <div class="meta-field">
+    <label>Agency</label>
+    <input type="text" placeholder="WPP" />
+  </div>
+  <div class="meta-field">
+    <label>Date</label>
+    <input type="date" />
+  </div>
+  <div class="meta-field">
+    <label>Capability</label>
+    <input type="text" placeholder="AI media planner" />
+  </div>
+  <div class="meta-field">
+    <label>Your name</label>
+    <input type="text" placeholder="Ed" />
+  </div>
+</div>
+
+<div id="tests"></div>
+
+<div class="verdict-section">
+  <div class="verdict-eyebrow">The verdict</div>
+  <h2 class="verdict-headline" id="verdictHead">Mark squares to begin.</h2>
+  <p class="verdict-detail" id="verdictDetail">Five in a row on a board — across, down, or diagonal — calls bingo. Hit conviction bingos to greenlight; hit fugazi bingos to walk.</p>
+  <div class="tally">
+    <div class="tally-card">
+      <div class="tally-label">Conviction bingos</div>
+      <div class="tally-value lime"><span id="greenCount">0</span><span class="tally-value-sub">/3</span></div>
+    </div>
+    <div class="tally-card">
+      <div class="tally-label">Fugazi bingos</div>
+      <div class="tally-value red"><span id="redCount">0</span><span class="tally-value-sub">/3</span></div>
+    </div>
+    <div class="tally-card">
+      <div class="tally-label">Squares marked</div>
+      <div class="tally-value"><span id="totalCount">0</span><span class="tally-value-sub">/150</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="notes">
+  <div class="notes-grid">
+    <div class="note-field">
+      <label>Best moment</label>
+      <textarea></textarea>
+    </div>
+    <div class="note-field">
+      <label>Worst moment</label>
+      <textarea></textarea>
+    </div>
+    <div class="note-field">
+      <label>Quote of the pitch</label>
+      <textarea></textarea>
+    </div>
+    <div class="note-field">
+      <label>Follow-up</label>
+      <textarea></textarea>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Pitch Lie Detector · Pull up the tool. Bait the risks. Probe the belief.
+</footer>
+
+</div>
+
+<script>
+const TESTS = [
+  {
+    num: '01',
+    title: 'Interrupt the prerecorded video',
+    desc: 'Did they show a working prototype, or just a polished demo reel?',
+    ammoLabel: 'How to bait it',
+    ammo: 'Stop the video. Ask the most junior person in the room to pull up the tool and use it live. Janky is fine. Nonexistent is not.',
+    green: {
+      name: 'Conviction',
+      free: 'Tool exists',
+      cells: [
+        'Live tool demo','Junior drove it','Something broke','Real client data','Code visible',
+        'Loading spinner','"Let me show you"','Janky but real','Showed a failed try','Demo went off-script',
+        'Practitioner corrected senior','URL was localhost','Edge case explored live','Improvised on a question',
+        'Showed terminal output','Copy-pasted from Slack','Demo wasn\'t pre-canned','Logged into real account','Refresh button hit',
+        '"It usually works"','Took a bending question','Showed admin panel','Clicked into backend','Tool had typos'
+      ]
+    },
+    red: {
+      name: 'Fugazi',
+      free: 'No prototype',
+      cells: [
+        'Prerecorded video','Stock Gen-Z footage','Silky transitions','Boxes-arrows-logos','Confident VO',
+        '\u2122 in tool name','"Working on access"','Demo recycled','"Future state" disclaimer','No live tool',
+        'Senior gatekept demo','"We can do that too"','Vague capability slide','Roadmap > reality','Logos as proof',
+        '"Proprietary platform"','Pretty animation, no UI','Pivot to case study','Demo "not ready today"','Glossy production',
+        '"Custom-built for you"','"Trust the process"','How skipped, wow sold','Practitioner not in room','Asked to "imagine"'
+      ]
+    }
+  },
+  {
+    num: '02',
+    title: 'Bait problems and risks',
+    desc: 'Did they admit failure modes, or stay vague and confident?',
+    ammoLabel: 'Questions to ask',
+    ammo: '"What did you try that didn\'t work?" \u00b7 "Where does this hallucinate?" \u00b7 "What\'s the failure mode you\'re most worried about?"',
+    green: {
+      name: 'Conviction',
+      free: 'Has scars',
+      cells: [
+        'Specific hallucination story','Named a failed model','Got animated about a bug','"We learned the hard way"','Pulled a launch',
+        'Showed the actual error','Cited their postmortem','"It\'s bad at X" volunteered','Knew the failure rate','Named a guardrail',
+        'Disagreed with each other','"Still figuring out"','Mentioned drift / decay','Specific dataset limit','"Don\'t use this for X"',
+        'Named what\'s NOT solved','Eval metric they fail','"Here\'s what surprised us"','Owned a wrong assumption','Asked YOU for edge cases',
+        'Gave a probability','Easy vs hard split','Volunteered competitor strength','"Worst case is..."','Named who NOT to use it on'
+      ]
+    },
+    red: {
+      name: 'Fugazi',
+      free: 'No scars',
+      cells: [
+        '"We can do that" x3','Pivoted to case study','Got vaguer under pressure','"It\'s all about the data"','"Trust us on this"',
+        'Deflected to roadmap','"AI is improving" non-answer','"We have guardrails" (vague)','"100% accuracy" claim','"Hallucination is solved"',
+        'Changed the subject','"Great question..." stall','Threw partner under bus','"Edge cases are rare"','"Our model is different" (no how)',
+        'Refused a weakness','Tone got chipper','Senior cut off practitioner','Marketing-speak escalated','"Address that in scoping"',
+        '"Others struggle, we don\'t"','Smile and redirect','"Confidential" as shield','Got defensive','Buzzword cascade'
+      ]
+    }
+  },
+  {
+    num: '03',
+    title: 'Probe belief, not technique',
+    desc: 'Do they have a philosophy, or just a tech stack?',
+    ammoLabel: 'The question',
+    ammo: '"What\'s the philosophy behind your AI, and how is it different from your competitors\'?" — They concede; they don\'t trash.',
+    green: {
+      name: 'Conviction',
+      free: 'Has belief',
+      cells: [
+        'Conceded competitor strength','Named what they sacrificed','"Not for every client"','Articulated a real tradeoff','Pithy philosophy line',
+        'Disagreed with consensus','"We chose NOT to do X"','Client they turned down','Belief preceded the tech','"We were wrong about Y"',
+        'Sunday-argument energy','Recommended other agency','Belief predates the trend','Belief shapes who they hire','Unfashionable opinion',
+        'Belief in one sentence','Belief shaped product choice','"Our worldview is..."','Belief is testable','Cited a thinker',
+        'Specific, not "quality"','Knew when belief breaks','Whole team echoed it','Belief made you uncomfortable','Named what they don\'t do'
+      ]
+    },
+    red: {
+      name: 'Fugazi',
+      free: 'No belief',
+      cells: [
+        'Trashed competitor by name','Led with LLM logos','\u2122 name with caps','"Proprietary" 3+ times','Tech stack > worldview',
+        '"All the top models"','"State of the art"','Belief = "we\'re better"','Couldn\'t differentiate','"We do everything, better"',
+        'Adweek-flight energy','Buzzword bingo','Mission statement vibes','"Our DNA is innovation"','Slide titled "Why Us"',
+        'Quoted a Gartner chart','"End-to-end solution"','"Best of breed"','Philosophy = features list','Team contradicted',
+        'Belief changed when challenged','"We\'re agnostic" cop-out','Couldn\'t name what they don\'t do','Belief = whatever client wants','Hedged every claim'
+      ]
+    }
+  }
+];
+
+function buildBoard(testIdx, type, board) {
+  const cells = [...board.cells];
+  cells.splice(12, 0, board.free);
+  return cells.map((text, i) => ({
+    text,
+    isFree: i === 12,
+    id: 't' + testIdx + '-' + type + '-' + i
+  }));
+}
+
+function checkBingo(activeMap, testIdx, type) {
+  const lines = [
+    [0,1,2,3,4],[5,6,7,8,9],[10,11,12,13,14],[15,16,17,18,19],[20,21,22,23,24],
+    [0,5,10,15,20],[1,6,11,16,21],[2,7,12,17,22],[3,8,13,18,23],[4,9,14,19,24],
+    [0,6,12,18,24],[4,8,12,16,20]
+  ];
+  const winning = new Set();
+  let hit = false;
+  for (const line of lines) {
+    if (line.every(i => activeMap['t' + testIdx + '-' + type + '-' + i])) {
+      hit = true;
+      line.forEach(i => winning.add('t' + testIdx + '-' + type + '-' + i));
+    }
+  }
+  return { hit, winning };
+}
+
+const state = {};
+
+function escapeHtml(str) {
+  return str.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
+function render() {
+  const container = document.getElementById('tests');
+  container.innerHTML = '';
+  TESTS.forEach((test, idx) => {
+    const greenCells = buildBoard(idx, 'g', test.green);
+    const redCells = buildBoard(idx, 'r', test.red);
+    const greenBingo = checkBingo(state, idx, 'g');
+    const redBingo = checkBingo(state, idx, 'r');
+
+    const section = document.createElement('section');
+    section.className = 'test';
+    section.innerHTML =
+      '<div class="test-header">' +
+        '<div class="test-num">Test ' + test.num + '</div>' +
+        '<h2 class="test-title">' + escapeHtml(test.title) + '</h2>' +
+        '<p class="test-desc">' + escapeHtml(test.desc) + '</p>' +
+        '<div class="test-ammo"><strong>' + escapeHtml(test.ammoLabel) + '</strong>' + escapeHtml(test.ammo) + '</div>' +
+      '</div>' +
+      '<div class="boards">' +
+        '<div class="board green ' + (greenBingo.hit ? 'bingo' : '') + '">' +
+          '<div class="board-header">' +
+            '<div class="board-label"><span class="board-dot"></span><span class="board-name">' + test.green.name + ' bingo</span></div>' +
+            '<div class="board-status">' + (greenBingo.hit ? 'Bingo' : 'Hunting') + '</div>' +
+          '</div>' +
+          '<div class="grid">' +
+            greenCells.map(c =>
+              '<div class="cell ' + (c.isFree ? 'free' : '') + ' ' + (state[c.id] ? 'active' : '') + ' ' + (greenBingo.winning.has(c.id) ? 'in-bingo' : '') + '" data-cell="' + c.id + '">' + escapeHtml(c.text) + '</div>'
+            ).join('') +
+          '</div>' +
+        '</div>' +
+        '<div class="board red ' + (redBingo.hit ? 'bingo' : '') + '">' +
+          '<div class="board-header">' +
+            '<div class="board-label"><span class="board-dot"></span><span class="board-name">' + test.red.name + ' bingo</span></div>' +
+            '<div class="board-status">' + (redBingo.hit ? 'Bingo' : 'Hunting') + '</div>' +
+          '</div>' +
+          '<div class="grid">' +
+            redCells.map(c =>
+              '<div class="cell ' + (c.isFree ? 'free' : '') + ' ' + (state[c.id] ? 'active' : '') + ' ' + (redBingo.winning.has(c.id) ? 'in-bingo' : '') + '" data-cell="' + c.id + '">' + escapeHtml(c.text) + '</div>'
+            ).join('') +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    container.appendChild(section);
+  });
+
+  container.querySelectorAll('.cell').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.dataset.cell;
+      state[id] = !state[id];
+      render();
+      updateVerdict();
+    });
+  });
+  updateVerdict();
+}
+
+function updateVerdict() {
+  let green = 0, red = 0;
+  TESTS.forEach((_, idx) => {
+    if (checkBingo(state, idx, 'g').hit) green++;
+    if (checkBingo(state, idx, 'r').hit) red++;
+  });
+  const total = Object.values(state).filter(Boolean).length;
+  document.getElementById('greenCount').textContent = green;
+  document.getElementById('redCount').textContent = red;
+  document.getElementById('totalCount').textContent = total;
+
+  const head = document.getElementById('verdictHead');
+  const detail = document.getElementById('verdictDetail');
+  head.classList.remove('lime', 'red');
+
+  if (total === 0) {
+    head.textContent = 'Mark squares to begin.';
+    detail.textContent = 'Five in a row on a board — across, down, or diagonal — calls bingo. Hit conviction bingos to greenlight; hit fugazi bingos to walk.';
+  } else if (green >= 3 && red === 0) {
+    head.textContent = 'Sign them.';
+    head.classList.add('lime');
+    detail.textContent = 'Conviction sweep. Prototype, scars, and belief all check out.';
+  } else if (green >= 2 && red === 0) {
+    head.textContent = 'Greenlight.';
+    head.classList.add('lime');
+    detail.textContent = 'Strong conviction signals. Scope tightly and proceed.';
+  } else if (red >= 2) {
+    head.textContent = 'Walk.';
+    head.classList.add('red');
+    detail.textContent = 'Fugazi confirmed. Two or more theatre bingos means the substance isn\'t there.';
+  } else if (red === 1 && green === 0) {
+    head.textContent = 'Theatre detected.';
+    head.classList.add('red');
+    detail.textContent = 'Demand a live working session before any next step.';
+  } else if (green > 0 && red > 0) {
+    head.textContent = 'Mixed signals.';
+    detail.textContent = 'Real on some axes, theatre on others. Scope tightly to what\'s real.';
+  } else {
+    head.textContent = 'Probe deeper.';
+    detail.textContent = 'Inconclusive so far. Keep tagging or request a follow-up working session.';
+  }
+}
+
+function resetAll() {
+  if (!confirm('Reset all squares and notes?')) return;
+  Object.keys(state).forEach(k => delete state[k]);
+  document.querySelectorAll('input[type="text"], input[type="date"], textarea').forEach(el => el.value = '');
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
