@@ -27,7 +27,7 @@
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
   }
-  .container { max-width: 880px; margin: 0 auto; padding: 32px 24px 80px; }
+  .container { max-width: 880px; margin: 0 auto; padding: 110px 24px 80px; }
 
   nav {
     display: flex;
@@ -136,42 +136,55 @@
   }
 
   .verdict {
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 32px;
-    margin-bottom: 48px;
-    position: sticky;
-    top: 12px;
-    z-index: 10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--border);
+    background: rgba(10, 10, 10, 0.92);
+    -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
-    background: rgba(10, 10, 10, 0.85);
+    padding: 14px 24px 16px;
+  }
+  .verdict-inner {
+    max-width: 880px;
+    margin: 0 auto;
   }
   .verdict-row {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    gap: 24px;
+    gap: 16px;
     flex-wrap: wrap;
   }
   .verdict-pct {
-    font-size: clamp(56px, 9vw, 96px);
+    font-size: clamp(34px, 5vw, 48px);
     font-weight: 500;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.03em;
     line-height: 1;
   }
-  .verdict-label { text-align: right; }
-  .verdict-label .eyebrow { margin-bottom: 8px; color: var(--text-muted); }
+  .verdict-label { text-align: right; min-width: 0; }
+  .verdict-label .eyebrow {
+    margin-bottom: 4px;
+    color: var(--text-muted);
+    font-size: 10px;
+  }
   .verdict-tag {
-    font-size: clamp(20px, 3vw, 28px);
+    font-size: clamp(13px, 1.6vw, 16px);
     font-weight: 500;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.01em;
+  }
+  .verdict .eyebrow {
+    font-size: 10px;
+    margin-bottom: 4px;
   }
   .verdict.green .verdict-pct, .verdict.green .verdict-tag { color: var(--lime); }
   .verdict.amber .verdict-pct, .verdict.amber .verdict-tag { color: var(--amber); }
   .verdict.red .verdict-pct, .verdict.red .verdict-tag { color: var(--red); }
   .verdict-bar {
-    margin-top: 20px;
-    height: 6px;
+    margin-top: 10px;
+    height: 4px;
     background: var(--surface-2);
     border-radius: 999px;
     overflow: hidden;
@@ -311,9 +324,9 @@
   }
 
   @media (max-width: 700px) {
-    .container { padding: 16px 16px 60px; }
+    .container { padding: 110px 16px 60px; }
     nav { padding-bottom: 16px; margin-bottom: 24px; }
-    .verdict { padding: 20px; position: static; }
+    .verdict { padding: 12px 16px; }
     .test { padding: 20px; }
     .notes-grid { grid-template-columns: 1fr; }
     .question { grid-template-columns: 1fr; }
@@ -336,7 +349,7 @@
       background: white !important;
       border: 1px solid #999 !important;
     }
-    .verdict { position: static; }
+    .verdict { position: static; padding: 12pt; }
     .verdict-pct, .verdict-tag { color: black !important; }
     .verdict-bar { background: #eee !important; }
     .verdict-bar-fill { background: #333 !important; }
@@ -376,17 +389,19 @@
 </div>
 
 <div class="verdict" id="verdict">
-  <div class="verdict-row">
-    <div>
-      <div class="eyebrow">🤥 Probability of lying</div>
-      <div class="verdict-pct"><span id="verdictPct">—</span></div>
+  <div class="verdict-inner">
+    <div class="verdict-row">
+      <div>
+        <div class="eyebrow">🤥 Probability of lying</div>
+        <div class="verdict-pct"><span id="verdictPct">—</span></div>
+      </div>
+      <div class="verdict-label">
+        <div class="eyebrow">Verdict</div>
+        <div class="verdict-tag" id="verdictTag">Answer some questions</div>
+      </div>
     </div>
-    <div class="verdict-label">
-      <div class="eyebrow">Verdict</div>
-      <div class="verdict-tag" id="verdictTag">Answer some questions</div>
-    </div>
+    <div class="verdict-bar"><div class="verdict-bar-fill" id="verdictBar" style="width: 0%"></div></div>
   </div>
-  <div class="verdict-bar"><div class="verdict-bar-fill" id="verdictBar" style="width: 0%"></div></div>
 </div>
 
 <div id="tests"></div>
