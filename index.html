@@ -390,6 +390,7 @@
     <a class="by" href="https://edtsue.com" target="_blank" rel="noopener">Made by Ed Tsue<span class="arrow">↗</span></a>
   </div>
   <div class="nav-actions">
+    <button class="nav-btn" id="shareBtn" onclick="shareTool()">Share</button>
     <button class="nav-btn" onclick="resetAll()">Reset</button>
     <button class="nav-btn nav-btn-primary" onclick="window.print()">Print</button>
   </div>
@@ -590,6 +591,28 @@ function updateVerdict() {
   tagEl.textContent = v.tag;
   barEl.style.width = overall.pct + '%';
   if (v.cls) card.classList.add(v.cls);
+}
+
+async function shareTool() {
+  const btn = document.getElementById('shareBtn');
+  const url = window.location.origin + window.location.pathname;
+  const data = {
+    title: 'Pitch Lie Detector',
+    text: 'Calculate the probability your agency is lying about AI.',
+    url,
+  };
+  try {
+    if (navigator.share) {
+      await navigator.share(data);
+      return;
+    }
+    await navigator.clipboard.writeText(url);
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => (btn.textContent = orig), 1500);
+  } catch {
+    // user cancelled share or clipboard failed — silently ignore
+  }
 }
 
 function resetAll() {
