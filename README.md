@@ -1,6 +1,6 @@
-# Pitch Lie Detector
+# Agency AI Lie Detector 🤔
 
-Calculate the probability your agency is lying about AI in a pitch.
+Calculate the probability your agency is lying about AI.
 
 Twelve quick yes/no questions across three tests:
 
