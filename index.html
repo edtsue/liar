@@ -347,8 +347,8 @@
   .chat-panel {
     position: relative;
     width: 100%;
-    max-width: 640px;
-    height: min(80vh, 720px);
+    max-width: 920px;
+    height: min(92vh, 980px);
     background: var(--bg);
     border: 1px solid var(--border);
     border-radius: 24px 24px 0 0;
@@ -359,8 +359,8 @@
     margin-bottom: 0;
   }
   @media (min-width: 700px) {
-    .chat-overlay { align-items: center; }
-    .chat-panel { border-radius: 24px; height: min(80vh, 720px); }
+    .chat-overlay { align-items: center; padding: 24px; }
+    .chat-panel { border-radius: 24px; height: min(86vh, 920px); }
   }
   .chat-head {
     display: flex;
@@ -403,11 +403,11 @@
     gap: 14px;
   }
   .chat-msg {
-    max-width: 88%;
-    padding: 12px 16px;
-    border-radius: 16px;
-    font-size: 17.5px;
-    line-height: 1.55;
+    max-width: 92%;
+    padding: 14px 18px;
+    border-radius: 18px;
+    font-size: 18px;
+    line-height: 1.6;
     white-space: pre-wrap;
     word-wrap: break-word;
   }
@@ -901,64 +901,64 @@ const CHAT_DATA = [
     prompts: [
       {
         q: "How do I politely interrupt a prerecorded demo?",
-        a: "You don't need to be polite about it — you need to be specific. Try: \"This looks great. Before we go further, can we pause the video and have someone open the actual tool? I want to see it run live with one of our briefs.\"\n\nTwo things this does:\n- Forces the agency to either show the tool or admit it isn't ready\n- Signals you're a sophisticated buyer who knows the difference\n\nIf they push back (\"the demo environment is offline,\" \"we'll show you in scoping\"), that IS the answer. Real tools survive someone clicking around in them.",
+        a: "Skip polite. Be specific:\n\n\"Pause the video. Can someone open the actual tool and run it on one of our briefs?\"\n\nIf they refuse — \"environment's offline,\" \"we'll cover that in scoping\" — that's your answer. Real tools survive someone clicking around in them.",
         sources: [
-          { label: "Recorded vs. live demos in B2B sales — Lenny's Newsletter", url: "https://www.lennysnewsletter.com/" },
-          { label: "How to evaluate AI startup demos — Andreessen Horowitz", url: "https://a16z.com/" },
+          { label: "Lenny's Newsletter — recorded vs. live demos", url: "https://www.lennysnewsletter.com/" },
+          { label: "a16z — evaluating AI startup demos", url: "https://a16z.com/" },
         ]
       },
       {
         q: "What's a real demo vs a theatre demo?",
-        a: "Real demos have friction. Things load slowly. The presenter mistypes. Edge cases produce weird output. You see the actual UI, including the parts they didn't polish.\n\nTheatre demos are smooth. Cuts between scenes. A confident voiceover. Stock footage of diverse young people looking at screens. The 'tool' is a mockup or a single-use video render.\n\nThe tell: ask to see something they didn't prep for. A real tool handles a surprise prompt. A theatre demo stalls — \"we'll cover that in the next phase.\"",
+        a: "Real demos have friction. Stuff loads slow. Edge cases produce weird output. The UI has rough edges.\n\nTheatre is smooth: cuts, voiceover, stock footage of attractive people looking at screens.\n\nThe tell — ask for something they didn't prep. Real tools handle surprises. Theatre stalls.",
         sources: [
-          { label: "Marc Andreessen on the difference between real and demo software", url: "https://a16z.com/" },
-          { label: "Building in public — why janky beats polished", url: "https://www.indiehackers.com/" },
+          { label: "a16z — real vs. demo software", url: "https://a16z.com/" },
+          { label: "Indie Hackers — janky beats polished", url: "https://www.indiehackers.com/" },
         ]
       },
       {
         q: "Examples of agencies caught overselling AI",
-        a: "A few patterns that have surfaced publicly:\n- Holding-company \"AI platforms\" that turn out to be wrappers around the same OpenAI API anyone can call\n- Case-study videos for tools that were never deployed at the client\n- \"Proprietary models\" that are off-the-shelf models with custom prompts\n\nThe industry-wide tell: a launch announcement that doesn't include a single screenshot of a real interface, just renders and case-study quotes. If you can't see the product, the product probably isn't the point — the press release is.",
+        a: "Three recurring patterns:\n- Holding-company \"AI platforms\" = wrapper on the same OpenAI API\n- Case-study videos for tools never deployed at the client\n- \"Proprietary models\" = off-the-shelf model + custom prompts\n\nIf the launch announcement has zero UI screenshots — only renders and quotes — the product isn't the point. The press release is.",
         sources: [
-          { label: "Adweek — Inside agency AI claims", url: "https://www.adweek.com/" },
-          { label: "Digiday — When 'proprietary AI' is just a wrapper", url: "https://digiday.com/" },
+          { label: "Adweek — agency AI claims", url: "https://www.adweek.com/" },
+          { label: "Digiday — when 'proprietary AI' is a wrapper", url: "https://digiday.com/" },
         ]
       },
       {
         q: "What should the practitioner — not the senior — be able to show me?",
-        a: "Hand the keyboard to the most junior person in the room and ask them to:\n- Open the actual tool\n- Run it on a brief or dataset you provide\n- Show you the raw output before any polishing\n- Click into one piece of the output and explain what the model did\n\nIf the senior keeps reaching for the keyboard or talking over them, that's your answer. The junior is the person who actually uses the tool day-to-day. If they can't operate it on demand, nobody can.",
+        a: "Hand the keyboard to the most junior person. Ask them to:\n- Open the tool\n- Run it on data you provide\n- Show raw output (no polishing)\n- Explain one decision the model made\n\nIf the senior keeps grabbing the keyboard, the junior doesn't actually use it. Which means nobody does.",
         sources: [
-          { label: "How to vet enterprise AI vendors — First Round Review", url: "https://review.firstround.com/" },
+          { label: "First Round — vetting enterprise AI vendors", url: "https://review.firstround.com/" },
         ]
       },
       {
         q: "What questions reveal a wrapper vs an actual product?",
-        a: "Three to ask in order:\n- \"What does the URL bar say when you're using the tool?\" If it's chat.openai.com or claude.ai, the \"product\" is just a person with an LLM tab open.\n- \"Can you show me the admin panel?\" Real products have one. Mockups don't.\n- \"What happens when the underlying model gets deprecated — does anything change for me?\" If they don't have an answer, they haven't built anything that abstracts the model.\n\nWrappers aren't always bad — but they're cheaper than the agency is charging.",
+        a: "Ask in this order:\n- \"What does the URL bar say while you're using it?\" (chat.openai.com → it's a person with a tab open)\n- \"Can you show the admin panel?\" (real products have one)\n- \"What changes for me if the underlying model is deprecated?\" (no answer = no abstraction)\n\nWrappers aren't always wrong — they're just cheaper than the agency is charging.",
         sources: [
-          { label: "When a wrapper IS the product — Stratechery", url: "https://stratechery.com/" },
-          { label: "AI moats are application moats — Benedict Evans", url: "https://www.ben-evans.com/" },
+          { label: "Stratechery — when a wrapper IS the product", url: "https://stratechery.com/" },
+          { label: "Benedict Evans — application moats", url: "https://www.ben-evans.com/" },
         ]
       },
       {
         q: "What if they show me 'before/after' case study slides instead of the tool?",
-        a: "That's a redirect tactic. Case study slides work without the tool existing. They're produced once, shipped to every pitch, and prove nothing about whether the tool runs today.\n\nAsk: \"Can we get the practitioner from that case study on the line, and have them recreate one specific output we just saw on the slide?\"\n\nIf the answer is \"that practitioner has moved on\" or \"that environment is gone\" — the work is over. The slide is a memorial to a project that ended. You're being sold something that no longer exists.",
+        a: "That's a redirect. Case slides work without the tool existing.\n\nCounter-move: \"Can we get the practitioner from that case study on the line and recreate one slide output, live?\"\n\nIf they've moved on or the environment's gone — the work is over. You're buying a memorial.",
         sources: [
-          { label: "Case studies as marketing artifact — Pricing & Positioning", url: "https://stratechery.com/" },
+          { label: "Stratechery — case studies as marketing", url: "https://stratechery.com/" },
         ]
       },
       {
         q: "How do I evaluate a demo with my own data on the spot?",
-        a: "Bring three things to the meeting:\n- A real brief from your team (sanitized)\n- A piece of campaign output from a recent project\n- One \"weird edge case\" — something off-pattern that real users actually face\n\nAsk them to run all three through the tool while you watch. Three signals to listen for:\n- Does the output match the brief's actual constraints, or just the keywords?\n- Does it surface anything you didn't already know?\n- When you push back, can the operator adjust the prompt/inputs in real time?\n\nA tool that adds insight on novel data is real. A tool that pattern-matches and confidently restates the brief is autocomplete with marketing.",
+        a: "Bring three things: a real brief, a recent piece of output, and one weird edge case.\n\nWatch for:\n- Does it match the brief's actual constraints (not just keywords)?\n- Does it surface something you didn't know?\n- Can the operator adjust on the fly when you push back?\n\nReal tools add insight on novel data. Theatre pattern-matches and restates the brief.",
         sources: [
-          { label: "How to design a real-data AI eval — Hugging Face", url: "https://huggingface.co/" },
-          { label: "BYO dataset evaluation — Vercel AI playbook", url: "https://vercel.com/" },
+          { label: "Hugging Face — real-data AI evals", url: "https://huggingface.co/" },
+          { label: "Vercel — BYO dataset evaluation", url: "https://vercel.com/" },
         ]
       },
       {
         q: "Should I demand to see the prompts and system instructions?",
-        a: "Yes — but frame it carefully. \"I'm not asking for trade secrets. I want to see the structure: what context goes in, what the model sees, and what comes back.\"\n\nA serious agency will share at least the architecture: \"We pass the brief, the brand guidelines, three exemplar campaigns, and a constraint list. The model produces 5 candidates. A second model rates them. A human picks final.\"\n\nIf they refuse entirely, two possibilities: (1) it's plain-vanilla ChatGPT under the hood and they don't want you to know, or (2) the prompts contain so little engineering you'd see the trick. Either way, the refusal is the answer.",
+        a: "Yes — frame it as architecture, not trade secrets:\n\n\"What context goes in, what the model sees, what comes back?\"\n\nA serious team will say something like \"brief + brand guidelines + 3 exemplars → 5 candidates → second model ranks → human picks.\"\n\nA flat refusal means it's vanilla ChatGPT under the hood — or the engineering is too thin to show.",
         sources: [
-          { label: "Prompt engineering as IP — DeepLearning.AI", url: "https://www.deeplearning.ai/" },
-          { label: "Open vs closed prompts — LangChain", url: "https://www.langchain.com/" },
+          { label: "DeepLearning.AI — prompt engineering as IP", url: "https://www.deeplearning.ai/" },
+          { label: "LangChain — open vs. closed prompts", url: "https://www.langchain.com/" },
         ]
       },
     ]
@@ -967,64 +967,64 @@ const CHAT_DATA = [
     prompts: [
       {
         q: "What's the cleanest question to expose a vague pitch?",
-        a: "\"What's the failure mode you're most worried about, and what have you put in place to catch it?\"\n\nA real team has rehearsed this. They'll name a specific failure (\"the model hallucinates citations on technical briefs\"), describe their guardrail (\"we run a citation-check pass against a verified database\"), and tell you when it still slips through.\n\nA theatre team gives you platitudes (\"we have robust QA\") or pivots to a case study. Watch the energy: people who've actually wrestled with the problem get specific and a little animated. People who haven't sound polished and tired.",
+        a: "\"What's the failure mode you're most worried about, and what's in place to catch it?\"\n\nReal teams name a specific failure, describe the guardrail, and admit when it still slips through. Theatre gives you \"we have robust QA\" then pivots to a case study.\n\nThe energy gives it away. People who've wrestled with it get animated. People who haven't sound polished and tired.",
         sources: [
-          { label: "Stanford HAI — Evaluating AI systems in deployment", url: "https://hai.stanford.edu/" },
-          { label: "Anthropic — On model evaluations and red-teaming", url: "https://www.anthropic.com/research" },
+          { label: "Stanford HAI — evaluating AI in deployment", url: "https://hai.stanford.edu/" },
+          { label: "Anthropic — model evals and red-teaming", url: "https://www.anthropic.com/research" },
         ]
       },
       {
         q: "What does 'hallucination' really mean and how do I probe it?",
-        a: "Hallucination = the model confidently producing content that isn't true. Made-up citations, invented statistics, fabricated quotes from real people. It happens because language models predict plausible text, not factual text.\n\nProbe it three ways:\n- \"Show me the most recent hallucination this tool produced and how you caught it.\"\n- \"What's the failure rate on a task like ours?\"\n- \"What human review sits between the model output and the client?\"\n\nIf they say \"our model doesn't hallucinate,\" you can leave. Every LLM-based system hallucinates. The question is whether they know where, how often, and what to do about it.",
+        a: "Hallucination = the model confidently making things up. Citations, stats, quotes — invented because LLMs predict plausible text, not factual text.\n\nProbe with:\n- \"Show me the latest hallucination this tool produced and how you caught it.\"\n- \"What's the failure rate on a task like ours?\"\n- \"What human review sits between output and client?\"\n\n\"Our model doesn't hallucinate\" = leave. Every LLM hallucinates.",
         sources: [
-          { label: "OpenAI — Lessons from production hallucinations", url: "https://openai.com/" },
-          { label: "Stanford CRFM — RAG limitations and hallucinations", url: "https://crfm.stanford.edu/" },
+          { label: "OpenAI — production hallucinations", url: "https://openai.com/" },
+          { label: "Stanford CRFM — RAG limitations", url: "https://crfm.stanford.edu/" },
         ]
       },
       {
         q: "What's the difference between scars and excuses?",
-        a: "Scars are specific. They have a date, a project, a person, a fix. \"On the Q3 brief for [client], the model ranked influencers using outdated engagement data. We caught it on review, switched the input source, and now we run a freshness check before each run.\"\n\nExcuses are abstract. \"AI is constantly improving.\" \"Edge cases happen.\" \"Our process catches that.\" These are PR sentences, not lessons.\n\nA team with scars will sometimes disagree with each other in front of you. \"No, the issue wasn't the data — it was the prompt.\" That's gold. It means they actually argued about it.",
+        a: "Scars are specific. Date, project, person, fix.\n\n\"Q3 brief for [client] — the model ranked influencers off stale engagement data. Caught on review. Switched source. Added a freshness check.\"\n\nExcuses are abstract. \"AI is improving.\" \"Edge cases happen.\" \"Our process catches that.\"\n\nBonus signal: a team with scars will openly disagree on the cause.",
         sources: [
-          { label: "First Round Review — How to spot real builders in interviews", url: "https://review.firstround.com/" },
+          { label: "First Round — spotting real builders", url: "https://review.firstround.com/" },
         ]
       },
       {
         q: "What should the agency volunteer about its weaknesses?",
-        a: "Strong signal — they bring it up before you ask:\n- \"Where this is weakest is high-stakes legal or medical claims.\"\n- \"It's terrible on anything pre-2023.\"\n- \"Don't use it on highly regulated categories without a human-in-the-loop.\"\n\nWeak signal — you have to extract it, and it's vague:\n- \"It's not perfect.\"\n- \"There are some edge cases.\"\n- \"Continuously improving.\"\n\nThe specific volunteered weakness is the strongest tell that someone has used the thing in production. Marketers don't know to volunteer it; only operators do.",
+        a: "Strong (volunteered, specific):\n- \"Weakest on legal or medical claims.\"\n- \"Bad on anything pre-2023.\"\n- \"Don't use without HITL on regulated categories.\"\n\nWeak (extracted, vague): \"Not perfect.\" \"Edge cases.\" \"Continuously improving.\"\n\nOnly operators volunteer specific weaknesses. Marketers don't know which ones matter.",
         sources: [
-          { label: "Andreessen Horowitz — Honest pitches outperform optimistic ones", url: "https://a16z.com/" },
+          { label: "a16z — honest pitches outperform optimistic ones", url: "https://a16z.com/" },
         ]
       },
       {
         q: "What evaluation metrics should an agency be able to cite?",
-        a: "If they truly run AI in production, they have at least one of these to share:\n- Task accuracy on a labeled internal eval set (e.g. \"82% on our brief-rewriting set\")\n- Human-review override rate (\"we override the model's first draft about 30% of the time\")\n- Latency / cost per run\n- A drift metric — how performance changes over time\n\nNo metric? They've never operationalized it. Pretty metric with no methodology (\"99% accurate!\")? Marketing slide.\n\nGood follow-up: \"How was that eval set built — and who labeled it?\"",
+        a: "If they ship in production, they have at least one of:\n- Accuracy on a labeled eval set (\"82% on brief-rewriting\")\n- Human override rate (\"we override ~30% of first drafts\")\n- Latency or cost per run\n- A drift metric over time\n\nNo metric = never operationalized. \"99% accurate!\" with no methodology = slide deck.\n\nFollow-up: \"Who built the eval set, and who labeled it?\"",
         sources: [
-          { label: "Hugging Face — Building production evals", url: "https://huggingface.co/" },
-          { label: "Eugene Yan — Patterns for LLM evaluation", url: "https://eugeneyan.com/" },
+          { label: "Hugging Face — production evals", url: "https://huggingface.co/" },
+          { label: "Eugene Yan — LLM evaluation patterns", url: "https://eugeneyan.com/" },
         ]
       },
       {
         q: "How do I tell if their guardrails actually exist?",
-        a: "Ask them to break the tool live. \"Show me a prompt that would make this fail, and walk me through what the system does to catch it.\"\n\nReal guardrails: they can demonstrate (1) the failed prompt in, (2) the moderation/check layer firing, (3) what the user sees. They can also tell you what slips past.\n\nFake guardrails: \"We have robust safety policies.\" Then nothing. Or: \"Our model is fine-tuned on safe data.\" That's not a guardrail; that's a hope.\n\nThe sharpest question: \"What's the most embarrassing thing this tool has output, and how did you find out?\"",
+        a: "Ask them to break it live: \"Show me a prompt that fails, and walk me through what the system catches.\"\n\nReal: they demonstrate input → moderation firing → user sees something safe. They also name what slips past.\n\nFake: \"Robust safety policies.\" Or \"Fine-tuned on safe data.\" That's a hope, not a guardrail.\n\nSharpest test: \"What's the most embarrassing thing this tool has output?\"",
         sources: [
-          { label: "OpenAI moderation API — design pattern", url: "https://openai.com/" },
-          { label: "Anthropic constitutional AI — guardrail architecture", url: "https://www.anthropic.com/research" },
+          { label: "OpenAI — moderation API design", url: "https://openai.com/" },
+          { label: "Anthropic — constitutional AI", url: "https://www.anthropic.com/research" },
         ]
       },
       {
         q: "What does 'human in the loop' actually mean — and when is it BS?",
-        a: "Real HITL is a designed checkpoint with measurable criteria. \"After model output, a senior planner reviews against this rubric. They override on average 28% of decisions. Override patterns are logged and used to retrain quarterly.\"\n\nFake HITL is a comfort phrase. \"There's always a human.\" Where? Doing what? Reviewing how many? With what authority to overrule?\n\nFollow-up question: \"Has the human ever overruled the model on a client deliverable in the last month? What did they catch?\" If they can't name a recent override, the human isn't really in the loop — they're rubber-stamping.",
+        a: "Real HITL: designed checkpoint, measurable criteria. \"Senior planner reviews against this rubric. Overrides ~28%. Logged. Retrained quarterly.\"\n\nFake HITL: \"There's always a human.\" Where? Doing what? With what authority to overrule?\n\nFollow-up: \"Name a recent override and what they caught.\" If they can't, the human is rubber-stamping.",
         sources: [
-          { label: "MIT Sloan — Human-in-the-loop done right", url: "https://sloanreview.mit.edu/" },
-          { label: "DeepMind — Active oversight architectures", url: "https://deepmind.google/" },
+          { label: "MIT Sloan — HITL done right", url: "https://sloanreview.mit.edu/" },
+          { label: "DeepMind — active oversight", url: "https://deepmind.google/" },
         ]
       },
       {
         q: "How do I tell if their team has actually shipped AI before?",
-        a: "Listen for the texture of operations:\n- They talk about cost — token spend, compute, infrastructure\n- They talk about latency — how long users wait\n- They have war stories about an outage or a bad week in production\n- They mention a postmortem they wrote\n- They name internal trade-offs (\"we picked accuracy over speed\")\n\nThis kind of detail is impossible to fake because it only emerges from actually running things. A pitch deck never produces this language. Production does.",
+        a: "Listen for the texture of operations:\n- Token spend, compute, infrastructure\n- Latency — how long users wait\n- An outage or a bad week\n- A postmortem they wrote\n- Trade-offs (\"we picked accuracy over speed\")\n\nThis vocabulary only comes from running things. Pitch decks never produce it. Production does.",
         sources: [
-          { label: "Increment — Postmortems and incident culture", url: "https://increment.com/" },
-          { label: "First Round — Engineering interview tells", url: "https://review.firstround.com/" },
+          { label: "Increment — postmortem culture", url: "https://increment.com/" },
+          { label: "First Round — engineering tells", url: "https://review.firstround.com/" },
         ]
       },
     ]
@@ -1033,63 +1033,63 @@ const CHAT_DATA = [
     prompts: [
       {
         q: "What's a real philosophy vs a tech-stack list?",
-        a: "A philosophy is a sentence about how the world works — not a list of tools.\n\nReal: \"We believe AI should make the practitioner faster, not replace them, because the strategist's judgment is the asset.\" That sentence excludes things. It explains why they hire who they hire and why they reject certain projects.\n\nFake: \"We use OpenAI, Anthropic, Gemini, our proprietary platform, and best-of-breed integrations to deliver end-to-end AI-powered solutions.\" That's a Best Buy receipt.\n\nThe test: ask them what they DON'T do. A philosophy rules things out. A tech stack just adds more.",
+        a: "A philosophy is one sentence about how the world works.\n\nReal: \"AI should make the practitioner faster, not replace them — judgment is the asset.\" That excludes things.\n\nFake: \"OpenAI + Anthropic + Gemini + our proprietary platform + best-of-breed integrations.\" That's a Best Buy receipt.\n\nTest: ask what they DON'T do. Philosophy rules things out. Tech stacks just add more.",
         sources: [
-          { label: "Paul Graham — Mean people fail (philosophy as a filter)", url: "http://paulgraham.com/mean.html" },
-          { label: "Stratechery — The strategy of saying no", url: "https://stratechery.com/" },
+          { label: "Paul Graham — mean people fail", url: "http://paulgraham.com/mean.html" },
+          { label: "Stratechery — saying no as strategy", url: "https://stratechery.com/" },
         ]
       },
       {
         q: "How do I pressure-test their belief in real time?",
-        a: "Concede something to them, then push the opposite direction. \"That's interesting — but doesn't that mean you'd be slower than [competitor] on volume work?\"\n\nWatch what happens:\n- Real belief: they accept the tradeoff and explain why it's worth it. \"Yes, we'd be slower. We think volume work is being commoditized anyway.\"\n- No belief: they retreat. \"We can do volume work too.\" Now their belief is whatever you wanted to hear.\n\nA real worldview survives counter-pressure. A pitch posture bends to whatever the buyer signals.",
+        a: "Concede, then push the opposite way. \"Doesn't that make you slower than [competitor] on volume work?\"\n\nReal belief accepts the tradeoff. \"Yes — we think volume work is commoditized anyway.\"\n\nNo belief retreats. \"We can do volume too.\" Now they're whatever you wanted to hear.\n\nWorldviews survive pressure. Postures bend to it.",
         sources: [
-          { label: "Adam Grant — Think Again (revising vs. defending beliefs)", url: "https://adamgrant.net/" },
+          { label: "Adam Grant — Think Again", url: "https://adamgrant.net/" },
         ]
       },
       {
         q: "What does conceding a competitor look like?",
-        a: "Strong: \"Honestly, [competitor] is better than us on hyper-personalized email — they've been at it longer and their data integrations are deeper. We're better on creative concepting because that's where we put our investment.\"\n\nThat sentence does three things at once: gives the competitor a real win, explains the tradeoff, and tells you what the agency actually believes.\n\nWeak: \"They're a great company, but we think we're more strategic.\" That's a non-answer. It concedes nothing and differentiates on a meaningless axis. Anyone can claim to be \"more strategic.\"",
+        a: "Strong: \"[Competitor] is better than us on hyper-personalized email — deeper data integrations. We invest in creative concepting instead.\"\n\nThat one sentence: real concession + real tradeoff + real belief.\n\nWeak: \"They're great, but we're more strategic.\" Concedes nothing. Differentiates on a meaningless axis.",
         sources: [
-          { label: "Roger Martin — Playing to Win (real strategy concedes)", url: "https://rogermartin.medium.com/" },
+          { label: "Roger Martin — Playing to Win", url: "https://rogermartin.medium.com/" },
         ]
       },
       {
         q: "What kinds of clients should they say they won't take?",
-        a: "A real philosophy implies a client they'd turn down. Listen for it:\n- \"We won't work with brands that need 24-hour creative turnaround. That's not what we're set up for.\"\n- \"We don't do paid social management. We refer that to [partner].\"\n- \"We won't take a client who treats AI as a cost-cut. The work suffers.\"\n\nThese sentences are expensive to say in a pitch — they shrink the agency's market. Which is exactly why hearing them is the strongest signal that the philosophy is real. People only turn down money for things they actually believe.",
+        a: "A real philosophy turns clients down. Listen for it:\n- \"We won't work with 24-hour creative turnaround.\"\n- \"We don't do paid social — we refer that out.\"\n- \"We won't take clients who treat AI as cost-cut.\"\n\nThese sentences shrink their market. Which is exactly why they're the strongest signal the philosophy is real. People only turn down money for things they believe.",
         sources: [
-          { label: "37signals — Saying no is a strategy", url: "https://37signals.com/" },
-          { label: "Basecamp — REWORK: rejection as positioning", url: "https://basecamp.com/books/rework" },
+          { label: "37signals — saying no", url: "https://37signals.com/" },
+          { label: "Basecamp — REWORK", url: "https://basecamp.com/books/rework" },
         ]
       },
       {
         q: "What's a good question to expose a 'state of the art' bluff?",
-        a: "\"What's the worldview behind your AI choices, and what would have to change in the world for you to abandon it?\"\n\nReal beliefs are falsifiable. A real strategist will say something like: \"We bet on smaller, fine-tuned models because client data is the moat. If frontier models get cheap enough that fine-tuning is irrelevant, we'd pivot.\"\n\nA poseur will say \"we always use the best model.\" That's not a belief — that's a procurement preference. It can't be wrong, which means it can't be right either. Beliefs that survive any future are usually empty.",
+        a: "\"What's the worldview behind your AI choices, and what would have to change for you to abandon it?\"\n\nReal: \"We bet on smaller fine-tuned models — client data is the moat. If frontier models get free, we'd pivot.\"\n\nFake: \"We always use the best model.\" That's procurement, not belief. Beliefs that survive any future are empty.",
         sources: [
-          { label: "Karl Popper — Falsifiability and the demarcation problem", url: "https://plato.stanford.edu/entries/popper/" },
-          { label: "Stratechery — Strategic bets and trade-offs", url: "https://stratechery.com/" },
+          { label: "Karl Popper — falsifiability", url: "https://plato.stanford.edu/entries/popper/" },
+          { label: "Stratechery — strategic bets", url: "https://stratechery.com/" },
         ]
       },
       {
         q: "How do I tell if their hiring matches their philosophy?",
-        a: "Ask: \"Who's the last person you hired specifically because of how you think about AI? Who's the last person you let go for the same reason?\"\n\nReal philosophy shows up in hiring. \"We hired a research engineer last quarter because we want to fine-tune our own models — we don't trust the API roadmap.\" That sentence reveals the belief AND a bet on it.\n\nIf hiring is generic (\"top talent across all disciplines\") or no firings ever connect to philosophy, the belief lives in slides only. Real worldviews shape org charts.",
+        a: "\"Who's the last person you hired specifically because of how you think about AI? Who's the last you let go?\"\n\nReal: \"Hired a research engineer last quarter — we want to fine-tune our own models, don't trust the API roadmap.\"\n\nGeneric (\"top talent across disciplines\") = the belief lives in slides only. Real worldviews shape org charts.",
         sources: [
-          { label: "Ben Horowitz — The Hard Thing About Hard Things (hiring against thesis)", url: "https://a16z.com/" },
-          { label: "Reid Hoffman — Blitzscaling and intentional culture", url: "https://www.reidhoffman.org/" },
+          { label: "Ben Horowitz — Hard Thing About Hard Things", url: "https://a16z.com/" },
+          { label: "Reid Hoffman — Blitzscaling", url: "https://www.reidhoffman.org/" },
         ]
       },
       {
         q: "What's a sign their belief is genuinely uncomfortable?",
-        a: "A real belief usually has a sentence the agency feels slightly nervous saying out loud — one that would alienate part of the market.\n\nExamples I've heard recently:\n- \"Most CMOs will not be running this software. Most agencies will be replaced.\"\n- \"We think the brand-positioning consultant role is dead in five years.\"\n- \"AI-generated creative is going to be obviously bad enough that nobody will take it seriously again — we're betting on craft.\"\n\nDoes their belief make YOU slightly uncomfortable? If yes, they probably mean it. If everyone in the room nods politely, it's a banality.",
+        a: "Real beliefs have a sentence the agency feels nervous saying — one that alienates part of the market.\n\n- \"Most CMOs won't run this software. Most agencies will be replaced.\"\n- \"The brand-positioning consultant is dead in 5 years.\"\n- \"AI creative will be obviously bad — we're betting on craft.\"\n\nDoes their belief make YOU slightly uncomfortable? Then they probably mean it. Polite nods around the room = banality.",
         sources: [
-          { label: "Peter Thiel — What important truth do few people agree with you on?", url: "https://blakemasters.com/post/24578683805/peter-thiels-cs183-startup-class-9-notes" },
+          { label: "Peter Thiel — what truth do few agree with you on?", url: "https://blakemasters.com/post/24578683805/peter-thiels-cs183-startup-class-9-notes" },
         ]
       },
       {
-        q: "How do I make sure I'm not the one being tricked by buzzwords?",
-        a: "Translate every buzzword into a concrete sentence in your head before you nod.\n\n- \"End-to-end\" → from what to what, exactly?\n- \"Proprietary\" → what code is theirs vs. what's API?\n- \"Best of breed\" → which trade-offs did they pick?\n- \"AI-native\" → what would change if you removed the AI?\n- \"Agentic\" → what does the agent actually do without a human?\n\nIf the translation isn't obvious, the buzzword is doing work the substance can't. A vendor who can't pass this translation test isn't lying to you on purpose — but they ARE selling you a feeling instead of a thing.",
+        q: "How do I make sure I'm not being tricked by buzzwords?",
+        a: "Translate every buzzword before you nod:\n\n- \"End-to-end\" → from what to what?\n- \"Proprietary\" → their code vs. API?\n- \"Best of breed\" → which tradeoffs?\n- \"AI-native\" → what changes if you remove the AI?\n- \"Agentic\" → what does the agent do without a human?\n\nIf the translation isn't obvious, the buzzword is doing work the substance can't.",
         sources: [
-          { label: "George Orwell — Politics and the English Language", url: "https://www.orwellfoundation.com/the-orwell-foundation/orwell/essays-and-other-works/politics-and-the-english-language/" },
-          { label: "Stratechery — Buzzwords and category creation", url: "https://stratechery.com/" },
+          { label: "Orwell — Politics and the English Language", url: "https://www.orwellfoundation.com/the-orwell-foundation/orwell/essays-and-other-works/politics-and-the-english-language/" },
+          { label: "Stratechery — buzzwords and category creation", url: "https://stratechery.com/" },
         ]
       },
     ]
