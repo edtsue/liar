@@ -615,14 +615,48 @@
   }
 
   @media (max-width: 700px) {
-    .container { padding: 110px 16px 60px; }
-    nav { padding-bottom: 16px; margin-bottom: 24px; }
-    .verdict { padding: 12px 16px; }
-    .test { padding: 20px; }
-    .notes-grid { grid-template-columns: 1fr; }
-    .question { grid-template-columns: 1fr; }
+    .container { padding: 96px 14px 60px; }
+    nav { padding-bottom: 16px; margin-bottom: 24px; flex-wrap: wrap; gap: 8px; }
+    .nav-actions { width: 100%; justify-content: flex-end; }
+    .by { display: none; }
+    .nav-btn { padding: 7px 12px; font-size: 14px; }
+    .nav-btn-icon { padding: 7px 10px; font-size: 16px; }
+    .logo { font-size: 16px; }
+    .verdict { padding: 10px 14px 12px; }
+    .verdict-pct { font-size: 38px; }
+    .verdict-tag { font-size: 13px; }
+    .verdict .eyebrow, .verdict-label .eyebrow { font-size: 10px; }
+    .verdict-bar { margin-top: 8px; }
+    .hero { margin-bottom: 24px; }
+    .hero-sub { font-size: 16px; }
+    .eyebrow { font-size: 12px; margin-bottom: 12px; }
+    h1 { font-size: 34px; }
+    .meta { padding: 14px; gap: 12px; margin-bottom: 32px; }
+    .test { padding: 20px; margin-bottom: 28px; }
+    .test-title { font-size: 22px; }
+    .test-desc { font-size: 14px; }
+    .test-chat-btn { font-size: 14px; padding: 7px 14px; }
+    .question { grid-template-columns: 1fr; padding: 14px 0; }
+    .question-text { font-size: 15px; }
+    .question-hint { font-size: 12px; }
     .answer { justify-self: start; }
-    h1 { font-size: 40px; }
+    .answer button { padding: 7px 14px; font-size: 14px; }
+    .notes-grid { grid-template-columns: 1fr; }
+    .note-field { padding: 16px; }
+    .note-field textarea { font-size: 15px; }
+    .chat-msg { font-size: 16px; padding: 12px 14px; line-height: 1.55; }
+    .chat-prompts { padding: 10px 14px; }
+    .chat-chip { font-size: 13px; padding: 6px 10px; }
+    .chat-disclaimer { font-size: 12px; padding: 8px 16px; }
+    .chat-head { padding: 12px 16px; }
+    .chat-head h3 { font-size: 16px; }
+    .chat-body { padding: 16px; gap: 12px; }
+    footer { font-size: 11px; }
+  }
+  @media (max-width: 380px) {
+    .nav-btn { padding: 6px 10px; font-size: 13px; }
+    .verdict-pct { font-size: 32px; }
+    h1 { font-size: 30px; }
   }
 
   @media print {
