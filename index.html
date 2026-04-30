@@ -361,7 +361,7 @@
 <nav>
   <div class="logo">
     <span class="logo-dot"></span>
-    <span>Pitch Lie Detector</span>
+    <span>🤥 Pitch Lie Detector</span>
   </div>
   <div class="nav-actions">
     <button class="nav-btn" onclick="resetAll()">Reset</button>
@@ -372,13 +372,13 @@
 <div class="hero">
   <div class="eyebrow">For clients, against fugazi</div>
   <h1>How likely is your agency <em>lying</em> about AI?</h1>
-  <p class="hero-sub">Answer 12 quick questions across three tests. We compute the probability they're selling theatre instead of substance.</p>
+  <p class="hero-sub">Answer 12 quick questions across three tests. We compute the probability they're selling theatre 🎭 instead of substance 🛠️.</p>
 </div>
 
 <div class="verdict" id="verdict">
   <div class="verdict-row">
     <div>
-      <div class="eyebrow">Probability of lying</div>
+      <div class="eyebrow">🤥 Probability of lying</div>
       <div class="verdict-pct"><span id="verdictPct">—</span></div>
     </div>
     <div class="verdict-label">
@@ -394,26 +394,26 @@
 <div class="notes">
   <div class="notes-grid">
     <div class="note-field">
-      <label>Best moment</label>
+      <label>💎 Best moment</label>
       <textarea></textarea>
     </div>
     <div class="note-field">
-      <label>Worst moment</label>
+      <label>😬 Worst moment</label>
       <textarea></textarea>
     </div>
     <div class="note-field">
-      <label>Quote of the pitch</label>
+      <label>💬 Quote of the pitch</label>
       <textarea></textarea>
     </div>
     <div class="note-field">
-      <label>Follow-up</label>
+      <label>📌 Follow-up</label>
       <textarea></textarea>
     </div>
   </div>
 </div>
 
 <footer>
-  Pull up the tool. Bait the risks. Probe the belief.
+  🔧 Pull up the tool. 🪤 Bait the risks. 🧠 Probe the belief.
 </footer>
 
 </div>
@@ -425,35 +425,35 @@
 const TESTS = [
   {
     num: '01',
-    title: 'Interrupt the prerecorded video',
+    title: '🎬 Interrupt the prerecorded video',
     desc: 'Did they show a real, working tool — or a polished theatre reel?',
     questions: [
-      { text: 'Did they show a live, working demo (not just a pre-recorded video)?', hint: 'Stop the reel. Ask to see the tool.' },
-      { text: 'Did the practitioner — not the senior — drive the demo?', hint: 'Hand the keyboard to the most junior person in the room.' },
-      { text: 'Did anything go off-script, break, or look janky?', hint: 'Realness leaks through; theatre is too smooth.' },
-      { text: 'Could you steer the demo into a case they didn\'t prep?', hint: 'A real tool handles surprises. Theatre stalls.' },
+      { text: 'Did they show a live, working demo (not just a pre-recorded video)?', hint: '⏸️ Stop the reel. Ask to see the tool.' },
+      { text: 'Did the practitioner — not the senior — drive the demo?', hint: '⌨️ Hand the keyboard to the most junior person in the room.' },
+      { text: 'Did anything go off-script, break, or look janky?', hint: '✨ Realness leaks through; theatre is too smooth.' },
+      { text: 'Could you steer the demo into a case they didn\'t prep?', hint: '🎯 A real tool handles surprises. Theatre stalls.' },
     ],
   },
   {
     num: '02',
-    title: 'Bait problems and risks',
+    title: '🪤 Bait problems and risks',
     desc: 'Did they admit failure modes, or stay vague and confident?',
     questions: [
-      { text: 'Did they describe a specific failure mode with details?', hint: '"Where does this hallucinate?"' },
-      { text: 'Did they name what their AI is bad at, without prompting?', hint: 'Volunteered weaknesses are a strong truth signal.' },
-      { text: 'Did they cite a probability, eval metric, or known limit?', hint: 'Numbers beat platitudes.' },
-      { text: 'Did they own a wrong assumption or disagree with each other?', hint: 'A real team has scars and seams.' },
+      { text: 'Did they describe a specific failure mode with details?', hint: '🤖 "Where does this hallucinate?"' },
+      { text: 'Did they name what their AI is bad at, without prompting?', hint: '👍 Volunteered weaknesses are a strong truth signal.' },
+      { text: 'Did they cite a probability, eval metric, or known limit?', hint: '📊 Numbers beat platitudes.' },
+      { text: 'Did they own a wrong assumption or disagree with each other?', hint: '🩹 A real team has scars and seams.' },
     ],
   },
   {
     num: '03',
-    title: 'Probe belief, not technique',
+    title: '🧠 Probe belief, not technique',
     desc: 'Do they have a philosophy, or just a tech stack?',
     questions: [
-      { text: 'Did they articulate a philosophy beyond the tech stack?', hint: '"What\'s your belief about how AI should work?"' },
-      { text: 'Did they concede a competitor\'s genuine strength?', hint: 'Conviction concedes; theatre trashes.' },
-      { text: 'Did they name what they explicitly don\'t do or won\'t take on?', hint: 'A real worldview rules things out.' },
-      { text: 'Did their belief survive your hardest pushback?', hint: 'Beliefs that bend are positions, not principles.' },
+      { text: 'Did they articulate a philosophy beyond the tech stack?', hint: '💭 "What\'s your belief about how AI should work?"' },
+      { text: 'Did they concede a competitor\'s genuine strength?', hint: '🤝 Conviction concedes; theatre trashes.' },
+      { text: 'Did they name what they explicitly don\'t do or won\'t take on?', hint: '🚫 A real worldview rules things out.' },
+      { text: 'Did their belief survive your hardest pushback?', hint: '🪨 Beliefs that bend are positions, not principles.' },
     ],
   },
 ];
@@ -485,11 +485,11 @@ function overallScore() {
 }
 
 function verdictFor(pct) {
-  if (pct == null) return { tag: 'Answer some questions', cls: '' };
-  if (pct < 25) return { tag: 'Substance — sign them', cls: 'green' };
-  if (pct < 50) return { tag: 'Mostly real — scope tightly', cls: 'green' };
-  if (pct < 75) return { tag: 'Theatre suspected — push back', cls: 'amber' };
-  return { tag: 'Almost certainly lying — walk', cls: 'red' };
+  if (pct == null) return { tag: '👇 Answer some questions', cls: '' };
+  if (pct < 25) return { tag: '✅ Substance — sign them', cls: 'green' };
+  if (pct < 50) return { tag: '👌 Mostly real — scope tightly', cls: 'green' };
+  if (pct < 75) return { tag: '🚩 Theatre suspected — push back', cls: 'amber' };
+  return { tag: '🚪 Almost certainly lying — walk', cls: 'red' };
 }
 
 function render() {
