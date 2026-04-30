@@ -45,6 +45,18 @@
     align-items: center;
     gap: 8px;
   }
+  .by {
+    margin-left: 12px;
+    padding-left: 12px;
+    border-left: 1px solid var(--border-strong);
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .by:hover { color: var(--lime); }
+  .by .arrow { font-size: 10px; margin-left: 2px; opacity: 0.6; }
   .logo-dot {
     width: 8px;
     height: 8px;
@@ -375,6 +387,7 @@
   <div class="logo">
     <span class="logo-dot"></span>
     <span>🤥 Pitch Lie Detector</span>
+    <a class="by" href="https://edtsue.com" target="_blank" rel="noopener">Made by Ed Tsue<span class="arrow">↗</span></a>
   </div>
   <div class="nav-actions">
     <button class="nav-btn" onclick="resetAll()">Reset</button>
