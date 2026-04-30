@@ -1219,6 +1219,23 @@ function resetAll() {
 }
 
 render();
+
+// First-visit scroll hint — tease the questions beneath the fold once,
+// then return to top so the user knows there's content below.
+(function maybeScrollHint() {
+  try {
+    if (localStorage.getItem('liar.seen-hint')) return;
+  } catch (e) { return; }
+  // Wait for layout to settle, then nudge down + back up
+  setTimeout(() => {
+    const target = Math.min(window.innerHeight * 0.55, 480);
+    window.scrollTo({ top: target, behavior: 'smooth' });
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      try { localStorage.setItem('liar.seen-hint', '1'); } catch (e) {}
+    }, 1300);
+  }, 800);
+})();
 </script>
 </body>
 </html>
