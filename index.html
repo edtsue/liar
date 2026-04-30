@@ -6,6 +6,23 @@
 <title>Pitch Lie Detector</title>
 <style>
   :root {
+    /* Light mode (default) */
+    --bg: #ffffff;
+    --surface: #fafafa;
+    --surface-2: #f0f0f0;
+    --border: #e5e5e5;
+    --border-strong: #d0d0d0;
+    --text: #0a0a0a;
+    --text-muted: #5a5a5a;
+    --text-dim: #999999;
+    --lime: #6b9e00;          /* readable lime for text on light bg */
+    --lime-fill: #ccff00;     /* electric brand lime for fills */
+    --lime-on-fill: #0a0a0a;
+    --red: #d92020;
+    --amber: #b85c00;
+    --card-overlay: rgba(255, 255, 255, 0.88);
+  }
+  [data-theme="dark"] {
     --bg: #000000;
     --surface: #0a0a0a;
     --surface-2: #141414;
@@ -15,8 +32,11 @@
     --text-muted: #8a8a8a;
     --text-dim: #4a4a4a;
     --lime: #ccff00;
+    --lime-fill: #ccff00;
+    --lime-on-fill: #000000;
     --red: #ff4444;
     --amber: #ffb020;
+    --card-overlay: rgba(10, 10, 10, 0.92);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: var(--bg); }
@@ -60,7 +80,7 @@
   .logo-dot {
     width: 8px;
     height: 8px;
-    background: var(--lime);
+    background: var(--lime-fill);
     border-radius: 50%;
   }
   .nav-actions { display: flex; gap: 8px; }
@@ -76,13 +96,13 @@
     cursor: pointer;
     transition: all 0.15s;
   }
-  .nav-btn:hover { background: var(--surface-2); border-color: #444; }
+  .nav-btn:hover { background: var(--surface-2); border-color: var(--text-muted); }
   .nav-btn-primary {
-    background: var(--lime);
-    color: #000;
-    border-color: var(--lime);
+    background: var(--lime-fill);
+    color: var(--lime-on-fill);
+    border-color: var(--lime-fill);
   }
-  .nav-btn-primary:hover { background: #b8e600; border-color: #b8e600; }
+  .nav-btn-primary:hover { filter: brightness(0.95); }
 
   .hero { margin-bottom: 32px; }
   .eyebrow {
@@ -144,7 +164,7 @@
   }
   .meta-field input:focus {
     outline: none;
-    border-bottom-color: var(--lime);
+    border-bottom-color: var(--lime-fill);
   }
 
   .verdict {
@@ -154,7 +174,7 @@
     right: 0;
     z-index: 50;
     border-bottom: 1px solid var(--border);
-    background: rgba(10, 10, 10, 0.92);
+    background: var(--card-overlay);
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     padding: 14px 24px 16px;
@@ -204,7 +224,7 @@
   .verdict-bar-fill {
     height: 100%;
     transition: width 0.25s ease, background-color 0.25s ease;
-    background: var(--lime);
+    background: var(--lime-fill);
   }
   .verdict.amber .verdict-bar-fill { background: var(--amber); }
   .verdict.red .verdict-bar-fill { background: var(--red); }
@@ -286,7 +306,7 @@
     cursor: pointer;
     transition: all 0.12s;
   }
-  .answer button.active.yes { background: var(--lime); color: #000; }
+  .answer button.active.yes { background: var(--lime-fill); color: var(--lime-on-fill); }
   .answer button.active.no { background: var(--red); color: #fff; }
   .answer button.active.skip { background: var(--surface-2); color: var(--text); }
   .answer button:hover:not(.active) { color: var(--text); }
@@ -592,6 +612,24 @@ function updateVerdict() {
   barEl.style.width = overall.pct + '%';
   if (v.cls) card.classList.add(v.cls);
 }
+
+const THEME_KEY = 'liar.theme';
+function applyTheme(theme) {
+  document.documentElement.dataset.theme = theme;
+  const btn = document.getElementById('themeBtn');
+  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+function toggleTheme() {
+  const cur = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+  const next = cur === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  try { localStorage.setItem(THEME_KEY, next); } catch {}
+}
+(function initTheme() {
+  let saved = 'light';
+  try { saved = localStorage.getItem(THEME_KEY) || 'light'; } catch {}
+  applyTheme(saved === 'dark' ? 'dark' : 'light');
+})();
 
 async function shareTool() {
   const btn = document.getElementById('shareBtn');
