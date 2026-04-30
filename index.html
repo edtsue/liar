@@ -5,25 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Agency AI Lie Detector</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='52' font-size='56'%3E%F0%9F%A4%94%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  // Apply theme before paint to avoid a light flash
+  (function() {
+    try {
+      var t = localStorage.getItem('liar.theme') || 'dark';
+      document.documentElement.dataset.theme = t === 'light' ? 'light' : 'dark';
+    } catch (e) {
+      document.documentElement.dataset.theme = 'dark';
+    }
+  })();
+</script>
 <style>
   :root {
-    /* Light mode (default) */
-    --bg: #ffffff;
-    --surface: #fafafa;
-    --surface-2: #f0f0f0;
-    --border: #e5e5e5;
-    --border-strong: #d0d0d0;
-    --text: #0a0a0a;
-    --text-muted: #5a5a5a;
-    --text-dim: #999999;
-    --lime: #6b9e00;          /* readable lime for text on light bg */
-    --lime-fill: #ccff00;     /* electric brand lime for fills */
-    --lime-on-fill: #0a0a0a;
-    --red: #d92020;
-    --amber: #b85c00;
-    --card-overlay: rgba(255, 255, 255, 0.88);
-  }
-  [data-theme="dark"] {
+    /* Dark mode (default) */
     --bg: #000000;
     --surface: #0a0a0a;
     --surface-2: #141414;
@@ -39,6 +37,22 @@
     --amber: #ffb020;
     --card-overlay: rgba(10, 10, 10, 0.92);
   }
+  [data-theme="light"] {
+    --bg: #ffffff;
+    --surface: #fafafa;
+    --surface-2: #f0f0f0;
+    --border: #e5e5e5;
+    --border-strong: #d0d0d0;
+    --text: #0a0a0a;
+    --text-muted: #5a5a5a;
+    --text-dim: #999999;
+    --lime: #6b9e00;
+    --lime-fill: #ccff00;
+    --lime-on-fill: #0a0a0a;
+    --red: #d92020;
+    --amber: #b85c00;
+    --card-overlay: rgba(255, 255, 255, 0.88);
+  }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { background: var(--bg); }
   body {
@@ -47,6 +61,8 @@
     line-height: 1.5;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
+    font-size: 1rem;
+    letter-spacing: -0.005em;
   }
   .container { max-width: 880px; margin: 0 auto; padding: 110px 24px 80px; }
 
@@ -59,7 +75,7 @@
     margin-bottom: 48px;
   }
   .logo {
-    font-size: 14px;
+    font-size: 17.5px;
     font-weight: 600;
     letter-spacing: -0.01em;
     display: flex;
@@ -70,14 +86,14 @@
     margin-left: 12px;
     padding-left: 12px;
     border-left: 1px solid var(--border-strong);
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 400;
     color: var(--text-muted);
     text-decoration: none;
     transition: color 0.15s;
   }
   .by:hover { color: var(--lime); }
-  .by .arrow { font-size: 10px; margin-left: 2px; opacity: 0.6; }
+  .by .arrow { font-size: 12.5px; margin-left: 2.5px; opacity: 0.6; }
   .logo-dot {
     width: 8px;
     height: 8px;
@@ -92,13 +108,13 @@
     padding: 8px 16px;
     border-radius: 100px;
     font-family: inherit;
-    font-size: 13px;
+    font-size: 16.25px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.15s;
   }
   .nav-btn:hover { background: var(--surface-2); border-color: var(--text-muted); }
-  .nav-btn-icon { padding: 8px 12px; font-size: 14px; line-height: 1; }
+  .nav-btn-icon { padding: 10px 15px; font-size: 17.5px; line-height: 1; }
   .nav-btn-primary {
     background: var(--lime-fill);
     color: var(--lime-on-fill);
@@ -108,7 +124,7 @@
 
   .hero { margin-bottom: 32px; }
   .eyebrow {
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -116,7 +132,7 @@
     margin-bottom: 16px;
   }
   h1 {
-    font-size: clamp(36px, 6vw, 64px);
+    font-size: clamp(45px, 6vw, 80px);
     font-weight: 500;
     letter-spacing: -0.03em;
     line-height: 1.05;
@@ -128,7 +144,7 @@
     font-weight: 400;
   }
   .hero-sub {
-    font-size: 17px;
+    font-size: 21.25px;
     color: var(--text-muted);
     max-width: 560px;
     line-height: 1.5;
@@ -146,7 +162,7 @@
   }
   .meta-field label {
     display: block;
-    font-size: 11px;
+    font-size: 13.75px;
     font-weight: 500;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -161,7 +177,7 @@
     color: var(--text);
     padding: 6px 0;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 500;
   }
   .meta-field input:focus {
@@ -193,7 +209,7 @@
     flex-wrap: wrap;
   }
   .verdict-pct {
-    font-size: clamp(34px, 5vw, 48px);
+    font-size: clamp(42.5px, 5vw, 60px);
     font-weight: 500;
     letter-spacing: -0.03em;
     line-height: 1;
@@ -202,15 +218,15 @@
   .verdict-label .eyebrow {
     margin-bottom: 4px;
     color: var(--text-muted);
-    font-size: 10px;
+    font-size: 12.5px;
   }
   .verdict-tag {
-    font-size: clamp(13px, 1.6vw, 16px);
+    font-size: clamp(16.25px, 1.6vw, 20px);
     font-weight: 500;
     letter-spacing: -0.01em;
   }
   .verdict .eyebrow {
-    font-size: 10px;
+    font-size: 12.5px;
     margin-bottom: 4px;
   }
   .verdict.green .verdict-pct, .verdict.green .verdict-tag { color: var(--lime); }
@@ -247,20 +263,20 @@
     flex-wrap: wrap;
   }
   .test-num {
-    font-size: 11px;
+    font-size: 13.75px;
     font-weight: 500;
     letter-spacing: 0.08em;
     color: var(--lime);
     text-transform: uppercase;
   }
   .test-score {
-    font-size: 13px;
+    font-size: 16.25px;
     font-weight: 500;
     color: var(--text-muted);
     font-variant-numeric: tabular-nums;
   }
   .test-score .num {
-    font-size: 18px;
+    font-size: 22.5px;
     color: var(--text);
     font-weight: 600;
   }
@@ -274,7 +290,7 @@
     padding: 6px 12px;
     border-radius: 100px;
     font-family: inherit;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.15s;
@@ -325,8 +341,8 @@
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
   }
-  .chat-head .label { color: var(--lime); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
-  .chat-head h3 { font-size: 16px; font-weight: 500; margin-top: 2px; letter-spacing: -0.01em; }
+  .chat-head .label { color: var(--lime); font-size: 13.75px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+  .chat-head h3 { font-size: 20px; font-weight: 500; margin-top: 2.5px; letter-spacing: -0.01em; }
   .chat-close {
     background: transparent;
     border: 1px solid var(--border-strong);
@@ -335,7 +351,7 @@
     height: 28px;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 17.5px;
     line-height: 1;
   }
   .chat-close:hover { background: var(--surface-2); }
@@ -343,7 +359,7 @@
     padding: 10px 20px;
     background: var(--surface);
     border-bottom: 1px solid var(--border);
-    font-size: 12px;
+    font-size: 15px;
     color: var(--text-muted);
     line-height: 1.4;
     flex-shrink: 0;
@@ -361,7 +377,7 @@
     max-width: 88%;
     padding: 12px 16px;
     border-radius: 16px;
-    font-size: 14px;
+    font-size: 17.5px;
     line-height: 1.55;
     white-space: pre-wrap;
     word-wrap: break-word;
@@ -383,7 +399,7 @@
     margin-top: 12px;
     padding-top: 10px;
     border-top: 1px solid var(--border);
-    font-size: 12px;
+    font-size: 15px;
     color: var(--text-muted);
   }
   .chat-msg .sources a {
@@ -396,7 +412,7 @@
   .chat-typing {
     align-self: flex-start;
     color: var(--text-muted);
-    font-size: 13px;
+    font-size: 16.25px;
     padding: 8px 14px;
     background: var(--surface);
     border: 1px solid var(--border);
@@ -428,7 +444,7 @@
   }
   .chat-prompts-label {
     width: 100%;
-    font-size: 10px;
+    font-size: 12.5px;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--text-muted);
@@ -441,7 +457,7 @@
     padding: 7px 12px;
     border-radius: 100px;
     font-family: inherit;
-    font-size: 12px;
+    font-size: 15px;
     cursor: pointer;
     transition: all 0.12s;
   }
@@ -461,7 +477,7 @@
     padding: 10px 14px;
     border-radius: 100px;
     font-family: inherit;
-    font-size: 14px;
+    font-size: 17.5px;
   }
   .chat-input:focus { outline: none; border-color: var(--lime-fill); }
   .chat-send {
@@ -471,20 +487,20 @@
     padding: 10px 18px;
     border-radius: 100px;
     font-family: inherit;
-    font-size: 13px;
+    font-size: 16.25px;
     font-weight: 500;
     cursor: pointer;
   }
   .chat-send:hover { filter: brightness(0.95); }
   .test-title {
-    font-size: clamp(22px, 3vw, 30px);
+    font-size: clamp(27.5px, 3vw, 37.5px);
     font-weight: 500;
     letter-spacing: -0.02em;
     line-height: 1.15;
     margin-bottom: 8px;
   }
   .test-desc {
-    font-size: 15px;
+    font-size: 18.75px;
     color: var(--text-muted);
     margin-bottom: 24px;
   }
@@ -498,8 +514,8 @@
     align-items: center;
   }
   .question:first-of-type { border-top: none; padding-top: 0; }
-  .question-text { font-size: 15px; color: var(--text); line-height: 1.4; }
-  .question-hint { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+  .question-text { font-size: 18.75px; color: var(--text); line-height: 1.4; }
+  .question-hint { font-size: 15px; color: var(--text-muted); margin-top: 5px; }
   .answer {
     display: flex;
     gap: 4px;
@@ -515,7 +531,7 @@
     padding: 6px 14px;
     border-radius: 100px;
     font-family: inherit;
-    font-size: 13px;
+    font-size: 16.25px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.12s;
@@ -539,7 +555,7 @@
   }
   .note-field label {
     display: block;
-    font-size: 11px;
+    font-size: 13.75px;
     font-weight: 500;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -552,7 +568,7 @@
     border: none;
     color: var(--text);
     font-family: inherit;
-    font-size: 15px;
+    font-size: 18.75px;
     resize: vertical;
     min-height: 60px;
     line-height: 1.5;
@@ -564,7 +580,7 @@
     padding-top: 24px;
     border-top: 1px solid var(--border);
     text-align: center;
-    font-size: 12px;
+    font-size: 15px;
     color: var(--text-dim);
     letter-spacing: 0.04em;
   }
@@ -577,7 +593,7 @@
     .notes-grid { grid-template-columns: 1fr; }
     .question { grid-template-columns: 1fr; }
     .answer { justify-self: start; }
-    h1 { font-size: 32px; }
+    h1 { font-size: 40px; }
   }
 
   @media print {
@@ -670,12 +686,8 @@
     </div>
     <div class="chat-body" id="chatBody"></div>
     <div class="chat-prompts" id="chatPrompts">
-      <div class="chat-prompts-label">Try a question</div>
+      <div class="chat-prompts-label">Pick a question</div>
     </div>
-    <form class="chat-input-row" onsubmit="sendChatInput(event)">
-      <input class="chat-input" id="chatInput" placeholder="Ask anything about this test…" autocomplete="off" />
-      <button class="chat-send" type="submit">Send</button>
-    </form>
   </div>
 </div>
 
@@ -889,6 +901,37 @@ const CHAT_DATA = [
           { label: "How to vet enterprise AI vendors — First Round Review", url: "https://review.firstround.com/" },
         ]
       },
+      {
+        q: "What questions reveal a wrapper vs an actual product?",
+        a: "Three to ask in order:\n- \"What does the URL bar say when you're using the tool?\" If it's chat.openai.com or claude.ai, the \"product\" is just a person with an LLM tab open.\n- \"Can you show me the admin panel?\" Real products have one. Mockups don't.\n- \"What happens when the underlying model gets deprecated — does anything change for me?\" If they don't have an answer, they haven't built anything that abstracts the model.\n\nWrappers aren't always bad — but they're cheaper than the agency is charging.",
+        sources: [
+          { label: "When a wrapper IS the product — Stratechery", url: "https://stratechery.com/" },
+          { label: "AI moats are application moats — Benedict Evans", url: "https://www.ben-evans.com/" },
+        ]
+      },
+      {
+        q: "What if they show me 'before/after' case study slides instead of the tool?",
+        a: "That's a redirect tactic. Case study slides work without the tool existing. They're produced once, shipped to every pitch, and prove nothing about whether the tool runs today.\n\nAsk: \"Can we get the practitioner from that case study on the line, and have them recreate one specific output we just saw on the slide?\"\n\nIf the answer is \"that practitioner has moved on\" or \"that environment is gone\" — the work is over. The slide is a memorial to a project that ended. You're being sold something that no longer exists.",
+        sources: [
+          { label: "Case studies as marketing artifact — Pricing & Positioning", url: "https://stratechery.com/" },
+        ]
+      },
+      {
+        q: "How do I evaluate a demo with my own data on the spot?",
+        a: "Bring three things to the meeting:\n- A real brief from your team (sanitized)\n- A piece of campaign output from a recent project\n- One \"weird edge case\" — something off-pattern that real users actually face\n\nAsk them to run all three through the tool while you watch. Three signals to listen for:\n- Does the output match the brief's actual constraints, or just the keywords?\n- Does it surface anything you didn't already know?\n- When you push back, can the operator adjust the prompt/inputs in real time?\n\nA tool that adds insight on novel data is real. A tool that pattern-matches and confidently restates the brief is autocomplete with marketing.",
+        sources: [
+          { label: "How to design a real-data AI eval — Hugging Face", url: "https://huggingface.co/" },
+          { label: "BYO dataset evaluation — Vercel AI playbook", url: "https://vercel.com/" },
+        ]
+      },
+      {
+        q: "Should I demand to see the prompts and system instructions?",
+        a: "Yes — but frame it carefully. \"I'm not asking for trade secrets. I want to see the structure: what context goes in, what the model sees, and what comes back.\"\n\nA serious agency will share at least the architecture: \"We pass the brief, the brand guidelines, three exemplar campaigns, and a constraint list. The model produces 5 candidates. A second model rates them. A human picks final.\"\n\nIf they refuse entirely, two possibilities: (1) it's plain-vanilla ChatGPT under the hood and they don't want you to know, or (2) the prompts contain so little engineering you'd see the trick. Either way, the refusal is the answer.",
+        sources: [
+          { label: "Prompt engineering as IP — DeepLearning.AI", url: "https://www.deeplearning.ai/" },
+          { label: "Open vs closed prompts — LangChain", url: "https://www.langchain.com/" },
+        ]
+      },
     ]
   },
   {
@@ -923,6 +966,38 @@ const CHAT_DATA = [
           { label: "Andreessen Horowitz — Honest pitches outperform optimistic ones", url: "https://a16z.com/" },
         ]
       },
+      {
+        q: "What evaluation metrics should an agency be able to cite?",
+        a: "If they truly run AI in production, they have at least one of these to share:\n- Task accuracy on a labeled internal eval set (e.g. \"82% on our brief-rewriting set\")\n- Human-review override rate (\"we override the model's first draft about 30% of the time\")\n- Latency / cost per run\n- A drift metric — how performance changes over time\n\nNo metric? They've never operationalized it. Pretty metric with no methodology (\"99% accurate!\")? Marketing slide.\n\nGood follow-up: \"How was that eval set built — and who labeled it?\"",
+        sources: [
+          { label: "Hugging Face — Building production evals", url: "https://huggingface.co/" },
+          { label: "Eugene Yan — Patterns for LLM evaluation", url: "https://eugeneyan.com/" },
+        ]
+      },
+      {
+        q: "How do I tell if their guardrails actually exist?",
+        a: "Ask them to break the tool live. \"Show me a prompt that would make this fail, and walk me through what the system does to catch it.\"\n\nReal guardrails: they can demonstrate (1) the failed prompt in, (2) the moderation/check layer firing, (3) what the user sees. They can also tell you what slips past.\n\nFake guardrails: \"We have robust safety policies.\" Then nothing. Or: \"Our model is fine-tuned on safe data.\" That's not a guardrail; that's a hope.\n\nThe sharpest question: \"What's the most embarrassing thing this tool has output, and how did you find out?\"",
+        sources: [
+          { label: "OpenAI moderation API — design pattern", url: "https://openai.com/" },
+          { label: "Anthropic constitutional AI — guardrail architecture", url: "https://www.anthropic.com/research" },
+        ]
+      },
+      {
+        q: "What does 'human in the loop' actually mean — and when is it BS?",
+        a: "Real HITL is a designed checkpoint with measurable criteria. \"After model output, a senior planner reviews against this rubric. They override on average 28% of decisions. Override patterns are logged and used to retrain quarterly.\"\n\nFake HITL is a comfort phrase. \"There's always a human.\" Where? Doing what? Reviewing how many? With what authority to overrule?\n\nFollow-up question: \"Has the human ever overruled the model on a client deliverable in the last month? What did they catch?\" If they can't name a recent override, the human isn't really in the loop — they're rubber-stamping.",
+        sources: [
+          { label: "MIT Sloan — Human-in-the-loop done right", url: "https://sloanreview.mit.edu/" },
+          { label: "DeepMind — Active oversight architectures", url: "https://deepmind.google/" },
+        ]
+      },
+      {
+        q: "How do I tell if their team has actually shipped AI before?",
+        a: "Listen for the texture of operations:\n- They talk about cost — token spend, compute, infrastructure\n- They talk about latency — how long users wait\n- They have war stories about an outage or a bad week in production\n- They mention a postmortem they wrote\n- They name internal trade-offs (\"we picked accuracy over speed\")\n\nThis kind of detail is impossible to fake because it only emerges from actually running things. A pitch deck never produces this language. Production does.",
+        sources: [
+          { label: "Increment — Postmortems and incident culture", url: "https://increment.com/" },
+          { label: "First Round — Engineering interview tells", url: "https://review.firstround.com/" },
+        ]
+      },
     ]
   },
   {
@@ -955,6 +1030,37 @@ const CHAT_DATA = [
         sources: [
           { label: "37signals — Saying no is a strategy", url: "https://37signals.com/" },
           { label: "Basecamp — REWORK: rejection as positioning", url: "https://basecamp.com/books/rework" },
+        ]
+      },
+      {
+        q: "What's a good question to expose a 'state of the art' bluff?",
+        a: "\"What's the worldview behind your AI choices, and what would have to change in the world for you to abandon it?\"\n\nReal beliefs are falsifiable. A real strategist will say something like: \"We bet on smaller, fine-tuned models because client data is the moat. If frontier models get cheap enough that fine-tuning is irrelevant, we'd pivot.\"\n\nA poseur will say \"we always use the best model.\" That's not a belief — that's a procurement preference. It can't be wrong, which means it can't be right either. Beliefs that survive any future are usually empty.",
+        sources: [
+          { label: "Karl Popper — Falsifiability and the demarcation problem", url: "https://plato.stanford.edu/entries/popper/" },
+          { label: "Stratechery — Strategic bets and trade-offs", url: "https://stratechery.com/" },
+        ]
+      },
+      {
+        q: "How do I tell if their hiring matches their philosophy?",
+        a: "Ask: \"Who's the last person you hired specifically because of how you think about AI? Who's the last person you let go for the same reason?\"\n\nReal philosophy shows up in hiring. \"We hired a research engineer last quarter because we want to fine-tune our own models — we don't trust the API roadmap.\" That sentence reveals the belief AND a bet on it.\n\nIf hiring is generic (\"top talent across all disciplines\") or no firings ever connect to philosophy, the belief lives in slides only. Real worldviews shape org charts.",
+        sources: [
+          { label: "Ben Horowitz — The Hard Thing About Hard Things (hiring against thesis)", url: "https://a16z.com/" },
+          { label: "Reid Hoffman — Blitzscaling and intentional culture", url: "https://www.reidhoffman.org/" },
+        ]
+      },
+      {
+        q: "What's a sign their belief is genuinely uncomfortable?",
+        a: "A real belief usually has a sentence the agency feels slightly nervous saying out loud — one that would alienate part of the market.\n\nExamples I've heard recently:\n- \"Most CMOs will not be running this software. Most agencies will be replaced.\"\n- \"We think the brand-positioning consultant role is dead in five years.\"\n- \"AI-generated creative is going to be obviously bad enough that nobody will take it seriously again — we're betting on craft.\"\n\nDoes their belief make YOU slightly uncomfortable? If yes, they probably mean it. If everyone in the room nods politely, it's a banality.",
+        sources: [
+          { label: "Peter Thiel — What important truth do few people agree with you on?", url: "https://blakemasters.com/post/24578683805/peter-thiels-cs183-startup-class-9-notes" },
+        ]
+      },
+      {
+        q: "How do I make sure I'm not the one being tricked by buzzwords?",
+        a: "Translate every buzzword into a concrete sentence in your head before you nod.\n\n- \"End-to-end\" → from what to what, exactly?\n- \"Proprietary\" → what code is theirs vs. what's API?\n- \"Best of breed\" → which trade-offs did they pick?\n- \"AI-native\" → what would change if you removed the AI?\n- \"Agentic\" → what does the agent actually do without a human?\n\nIf the translation isn't obvious, the buzzword is doing work the substance can't. A vendor who can't pass this translation test isn't lying to you on purpose — but they ARE selling you a feeling instead of a thing.",
+        sources: [
+          { label: "George Orwell — Politics and the English Language", url: "https://www.orwellfoundation.com/the-orwell-foundation/orwell/essays-and-other-works/politics-and-the-english-language/" },
+          { label: "Stratechery — Buzzwords and category creation", url: "https://stratechery.com/" },
         ]
       },
     ]
@@ -996,7 +1102,7 @@ function renderChat() {
     body.innerHTML = history.map(m => {
       if (m.role === 'typing') return '<div class="chat-typing"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>';
       const sources = m.sources && m.sources.length
-        ? '<div class="sources"><div style="margin-bottom:4px; text-transform:uppercase; letter-spacing:0.06em; font-size:10px;">Sources</div>' +
+        ? '<div class="sources"><div style="margin-bottom:5px; text-transform:uppercase; letter-spacing:0.06em; font-size:12.5px;">Sources</div>' +
           m.sources.map(s => '<a href="' + escapeHtml(s.url) + '" target="_blank" rel="noopener">↗ ' + escapeHtml(s.label) + '</a>').join('') +
           '</div>'
         : '';
@@ -1034,27 +1140,6 @@ function askPreset(testIdx, promptIdx) {
     chatHistory[testIdx].push({ role: 'bot', text: prompt.a, sources: prompt.sources ?? [] });
     renderChat();
   }, 850);
-}
-
-function sendChatInput(e) {
-  e.preventDefault();
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (!text || chatActiveTest == null) return;
-  input.value = '';
-  const idx = chatActiveTest;
-  if (!chatHistory[idx]) chatHistory[idx] = [];
-  chatHistory[idx].push({ role: 'user', text });
-  chatHistory[idx].push({ role: 'typing' });
-  renderChat();
-  setTimeout(() => {
-    chatHistory[idx] = chatHistory[idx].filter(m => m.role !== 'typing');
-    chatHistory[idx].push({
-      role: 'bot',
-      text: 'I\'m a static demo without a live model — I don\'t have an answer to that exact question. Try one of the suggested prompts above; those have hand-picked answers and sources.',
-    });
-    renderChat();
-  }, 700);
 }
 
 const THEME_KEY = 'liar.theme';
