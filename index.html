@@ -284,19 +284,56 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: transparent;
-    border: 1px solid var(--border-strong);
+    position: relative;
+    background: var(--bg);
+    border: none;
     color: var(--text);
-    padding: 6px 12px;
+    padding: 8px 16px;
     border-radius: 100px;
     font-family: inherit;
     font-size: 15px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.15s;
+    margin-bottom: 24px;
+    margin-top: 4px;
+    isolation: isolate;
+    transition: transform 0.15s;
   }
-  .test-chat-btn:hover { background: var(--surface-2); border-color: var(--text-muted); }
-  .test-chat-btn { margin-bottom: 24px; margin-top: 4px; }
+  /* Rainbow ring via gradient border using a pseudo-element */
+  .test-chat-btn::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    z-index: -1;
+    border-radius: 100px;
+    background: conic-gradient(
+      from 0deg,
+      #ff4d4d, #ffb800, #ccff00, #00d4ff, #7c5cff, #ff4dde, #ff4d4d
+    );
+    background-size: 200% 200%;
+    animation: rainbow-spin 3.5s linear infinite;
+  }
+  /* Inner mask so the rainbow only shows as a border */
+  .test-chat-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 100px;
+    background: var(--bg);
+  }
+  .test-chat-btn:hover { transform: translateY(-1px); }
+  .test-chat-btn:hover::before {
+    animation-duration: 1.6s;
+    filter: brightness(1.15) saturate(1.2);
+  }
+  @keyframes rainbow-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .test-chat-btn::before { animation: none; }
+  }
 
   /* Chat overlay */
   .chat-overlay {
